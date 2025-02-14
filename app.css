@@ -1,0 +1,150 @@
+ /* == COLOUR VARIABLES */
+:root {
+    --white: #ffffff;
+    --off-white: #f1f1f1;
+    --light-grey: #cecece;
+    --mid-grey: #9e9e9e;
+    --grey: #7a7a7a;
+    --dark-grey: #686868;
+    --charcoal: #222222;
+    --black: #171717;
+
+    --yellow: #e2d370;
+    --lime: #cce66e;
+    --green: #9fec83;
+    --turquoise: #75eca7;
+    --aqua: #6ce1d3;
+    --light-blue: #68d3f0;
+    --blue: #61b7ff;
+    --dark-blue: #669af6;
+    --indigo: #6c7ded;
+    --violet: #7d62f0;
+    --purple: #8d45f3;
+    --light-purple: #af42f0;
+    --magenta: #d046e9;
+    --pink: #da54ab;
+    --salmon: #dc4f82;
+    --scarlet: #dc5164;
+    --red: #e46868;
+    --tangerine: #ed896e;
+    --orange: #f7ad7b;
+
+
+    --light-bg: var(--white);
+    --light-text: var(--dark-grey);
+    --light-section: var(--off-white);
+
+    --dark-bg: var(--black);
+    --dark-text: var(--light-grey);
+    --dark-section: var(--charcoal);
+    
+    --primary-color: var(--scarlet);
+    --secondary-color: var(--dark-blue);
+}
+
+/* === LIGHT MODE === */
+body.light-mode {
+    --bg-color: var(--light-bg);
+    --text-color: var(--light-text);
+    --section-bg: var(--light-section);
+    --button-bg: var(--primary-color);
+    --button-text: white;
+}
+
+/* === DARK MODE === */
+body.dark-mode {
+    --bg-color: var(--dark-bg);
+    --text-color: var(--dark-text);
+    --section-bg: var(--dark-section);
+    --button-bg: var(--secondary-color);
+    --button-text: black;
+}
+
+/* === GENERAL STYLES === */
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background 0.3s, color 0.3s;
+    overflow-y: auto;
+}
+
+/* === HEADER STYLES === */
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    transition: padding 0.3s ease-in-out, height 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Content */
+#header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Logo */
+#logo {
+    height: 100px;
+    width: auto;
+    transition: height 0.3s ease-in-out;
+}
+
+/* App Image */
+#app-image {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 20px;
+    transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* === SHRINK HEADER ON SCROLL === */
+.shrunk #main-header {
+    padding: 10px 20px;
+}
+
+.shrunk #logo {
+    height: 50px;
+}
+
+.shrunk #app-image {
+    width: 50%;
+    opacity: 0;
+}
+
+/* === BUTTON STYLES === */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    background: var(--button-bg);
+    color: var(--button-text);
+    transition: background 0.3s, color 0.3s;
+}
+
+/* === SECTION STYLES === */
+section {
+    min-height: 200px;
+    padding: 40px;
+    margin: 100px auto 20px;
+    max-width: 600px;
+    background: var(--section-bg);
+    border-radius: 12px;
+    transition: background 0.3s;
+}
