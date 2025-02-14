@@ -20,42 +20,39 @@ themeToggle.addEventListener('click', () => {
     updateButtonText();
 });
 
+// Get references to elements
+const scrollContainer = document.getElementById('scroll-container');
 const header = document.getElementById('main-header');
 const logo = document.getElementById('logo');
 const appImage = document.getElementById('app-image');
 const content = document.getElementById('content');
 
-const maxScroll = 400;  // The range over which shrinking happens
-const initialHeaderPadding = 40;
-const minHeaderPadding = 10;
-const initialLogoSize = 100;
-const minLogoSize = 50;
-const initialImageSize = 80; // Percentage
-const minImageSize = 50;
-const initialMarginTop = header.offsetHeight + 20;
+// Constants for header sizing
+const maxScroll = 300;       // Scroll distance over which the full shrink effect happens
+const maxHeaderHeight = 200; // Initial header height (px)
+const minHeaderHeight = 60;  // Minimum header height (px)
 
-// Function to update header elements proportionally
-const updateHeader = () => {
-    const scrollY = Math.min(window.scrollY, maxScroll);
-    const shrinkFactor = scrollY / maxScroll; // Value between 0 and 1
-
-    // Calculate new sizes based on the shrink factor
-    const newPadding = initialHeaderPadding - (shrinkFactor * (initialHeaderPadding - minHeaderPadding));
-    const newLogoSize = initialLogoSize - (shrinkFactor * (initialLogoSize - minLogoSize));
-    const newImageSize = initialImageSize - (shrinkFactor * (initialImageSize - minImageSize));
-    const newImageOpacity = 1 - shrinkFactor;
-
-    // Apply new styles
-    header.style.padding = `${newPadding}px 20px`;
-    logo.style.height = `${newLogoSize}px`;
-    appImage.style.width = `${newImageSize}%`;
-    appImage.style.opacity = newImageOpacity;
-
-    // Lock the content position dynamically
-    content.style.marginTop = `${header.getBoundingClientRect().height + 20}px`;
-};
-
-// Ensure correct layout on load and resize
-window.addEventListener('load', updateHeader);
-window.addEventListener('resize', updateHeader);
-window.addEventListener('scroll', updateHeader);
+// Listen for scroll events on the scroll container
+scrollContainer.addEventListener('scroll', () => {
+  const scrollTop = scrollContainer.scrollTop;
+  // Calculate a proportional shrink factor (0 to 1)
+  const shrinkFactor = Math.min(scrollTop / maxScroll, 1);
+  
+  // Calculate new header height based on scroll
+  const newHeaderHeight = maxHeaderHeight - ((maxHeaderHeight - minHeaderHeight) * shrinkFactor);
+  header.style.height = `${newHeaderHeight}px`;
+  
+  // Scale the logo from 1 down to 0.6 as the header shrinks
+  const newLogoScale = 1 - (0.4 * shrinkFactor);
+  logo.style.transform = `scale(${newLogoScale})`;
+  
+  // For the app image, fade it out and scale it down as you scroll:
+  // It will scale from 1 down to 0.7 and fade out completely at full shrink
+  const newImageScale = 1 - (0.3 * shrinkFactor);
+  const newImageOpacity = 1 - shrinkFactor;
+  appImage.style.transform = `scale(${newImageScale})`;
+  appImage.style.opacity = newImageOpacity;
+  
+  // Adjust the content's top margin so that it always starts below the header (plus some extra space)
+  content.style.marginTop = `${newHeaderHeight + 20}px`;
+});
