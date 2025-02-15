@@ -29,7 +29,6 @@
     --tangerine: #ed896e;
     --orange: #f7ad7b;
 
-
     --light-bg: var(--white);
     --light-text: var(--dark-grey);
     --light-section: var(--off-white);
@@ -38,74 +37,113 @@
     --dark-text: var(--light-grey);
     --dark-section: var(--charcoal);
     
-    --accent-color: var(--scarlet);
+    --primary-color: var(--scarlet);
+    --secondary-color: var(--dark-blue);
 }
-  
-  /* Prevent default body scrolling */
-  body {
-    margin: 0;
-    font-family: 'Nunito', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    overflow: hidden;
-    text-align: center;
-  }
-  
-  /* Scrollable container that fills the viewport */
-  #scroll-container {
-    height: 100vh;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
-  }
-  
-  /* === Header (Fixed, Shrinks on Scroll) === */
-  #main-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 200px; /* starting height */
-    background-color: var(--bg-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: height 0.1s linear;
-  }
-  
-  /* === Logo (SVG) === */
-  #logo {
-    width: 120px;
-    transition: transform 0.1s linear;
-  }
-  
-  /* === App Image === */
-  #app-image {
-    width: 150px;
-    transition: transform 0.1s linear, opacity 0.1s linear;
-  }
-  
-  /* === Main Content === */
-  #content {
-    /* Give content an initial margin-top so it starts below the header.
-       This margin will be updated by JS on scroll */
-    margin-top: 220px;
-    padding: 20px;
-  }
-  
-  /* === Button Styles === */
-  #download-btn {
-    background-color: var(--accent-color);
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 10px;
-    color: #000;
-    transition: background 0.2s ease;
-  }
-  
-  #download-btn:hover {
-    background-color: #cc7a00;
-  }  
+
+/* === LIGHT MODE === */
+body.light-mode {
+  --bg-color: var(--light-bg);
+  --text-color: var(--light-text);
+  --section-bg: var(--light-section);
+  --button-bg: var(--primary-color);
+  --button-text: white;
+}
+
+/* === DARK MODE === */
+body.dark-mode {
+  --bg-color: var(--dark-bg);
+  --text-color: var(--dark-text);
+  --section-bg: var(--dark-section);
+  --button-bg: var(--secondary-color);
+  --button-text: black;
+}
+
+/* === GENERAL STYLES === */
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.3s, color 0.3s;
+  overflow: hidden; /* Locks body scrolling */
+}
+
+/* === HEADER STYLES === */
+#main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px; /* initial header height */
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  transition: height 0.1s linear;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.1s linear;
+}
+
+/* === LOGO (SVG) === */
+#logo {
+  height: 100px;
+  width: auto;
+  transition: transform 0.1s linear;
+}
+
+/* === APP IMAGE === */
+#app-image {
+  width: 80%;
+  max-width: 500px;
+  margin-top: 20px;
+  transition: transform 0.1s linear, opacity 0.1s linear;
+}
+
+/* === THEME TOGGLE BUTTON & OTHER BUTTONS === */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  background: var(--button-bg);
+  color: var(--button-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* === SECTION STYLES === */
+section {
+  min-height: 200px;
+  padding: 40px;
+  margin: 100px auto 20px;
+  max-width: 600px;
+  background: var(--section-bg);
+  border-radius: 12px;
+  transition: background 0.3s;
+}
+
+/* === SCROLL CONTAINER === */
+#scroll-container {
+  height: 100vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+}
+
+/* === MAIN CONTENT === */
+#content {
+  margin-top: 220px; /* initial margin: header height (200px) + 20px */
+  padding: 20px;
+}

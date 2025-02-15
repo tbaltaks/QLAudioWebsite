@@ -20,39 +20,37 @@ themeToggle.addEventListener('click', () => {
     updateButtonText();
 });
 
-// Get references to elements
+// Get reference to the scroll container instead of window
 const scrollContainer = document.getElementById('scroll-container');
 const header = document.getElementById('main-header');
 const logo = document.getElementById('logo');
 const appImage = document.getElementById('app-image');
 const content = document.getElementById('content');
 
-// Constants for header sizing
-const maxScroll = 300;       // Scroll distance over which the full shrink effect happens
-const maxHeaderHeight = 200; // Initial header height (px)
-const minHeaderHeight = 60;  // Minimum header height (px)
+const maxScroll = 300;       // scroll distance for full effect
+const maxHeaderHeight = 200; // original header height (px)
+const minHeaderHeight = 60;  // smallest header height (px)
 
-// Listen for scroll events on the scroll container
 scrollContainer.addEventListener('scroll', () => {
   const scrollTop = scrollContainer.scrollTop;
-  // Calculate a proportional shrink factor (0 to 1)
+  
+  // Calculate proportional shrink factor (0 to 1)
   const shrinkFactor = Math.min(scrollTop / maxScroll, 1);
   
   // Calculate new header height based on scroll
   const newHeaderHeight = maxHeaderHeight - ((maxHeaderHeight - minHeaderHeight) * shrinkFactor);
   header.style.height = `${newHeaderHeight}px`;
   
-  // Scale the logo from 1 down to 0.6 as the header shrinks
+  // Scale the SVG logo (adjust scaling range as needed)
   const newLogoScale = 1 - (0.4 * shrinkFactor);
   logo.style.transform = `scale(${newLogoScale})`;
   
-  // For the app image, fade it out and scale it down as you scroll:
-  // It will scale from 1 down to 0.7 and fade out completely at full shrink
+  // Fade and scale the app image
   const newImageScale = 1 - (0.3 * shrinkFactor);
   const newImageOpacity = 1 - shrinkFactor;
   appImage.style.transform = `scale(${newImageScale})`;
   appImage.style.opacity = newImageOpacity;
   
-  // Adjust the content's top margin so that it always starts below the header (plus some extra space)
+  // Adjust main content margin so it starts below the header (with extra spacing)
   content.style.marginTop = `${newHeaderHeight + 20}px`;
 });

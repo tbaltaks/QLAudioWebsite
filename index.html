@@ -1,39 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Questlore Audio</title>
   <link rel="stylesheet" href="app.css" />
+  <script defer src="app.js"></script>
 </head>
+
 <body>
-  <!-- Header: Contains the SVG logo and the app image -->
+  
+  <!-- Header (always fixed) -->
   <header id="main-header">
-    <img id="logo" src="Questlore Audio Logo" alt="Questlore Audio Logo" />
-    <img id="app-image" src="Screenshot-light.png" alt="App Preview" />
+    <div id="header-content">
+      <!-- SVG logo -->
+      <img id="logo" src="assets/Questlore Audio Logo.svg" alt="Questlore Audio Logo" />
+      <!-- App image (e.g., a screenshot) -->
+      <img id="app-image" src="assets/Screenshot-light.png" alt="App Preview" />
+    </div>
+    <button id="theme-toggle">Dark Mode</button>
   </header>
 
-  <!-- Scrollable container -->
+  <!-- Scroll Container: Locks body scroll and captures scroll events -->
   <div id="scroll-container">
-    <!-- Main content; this container will scroll while the body remains fixed -->
     <main id="content">
-      <section>
-        <h1>Discover Questlore Audio</h1>
-        <p>Blend, layer, and fade looping audio seamlessly.</p>
+      <section id="intro">
+        <h2>Discover Seamless Audio Blending</h2>
+        <p>Questlore Audio lets you layer and fade looping sounds effortlessly.</p>
       </section>
+
       <section>
+        <h2>Welcome to Questlore Audio</h2>
+        <p>Scroll down to see the header shrink.</p>
+      </section>
+
+      <section>
+        <h2>More Content</h2>
+        <p>This is a test section to create scrolling space.</p>
+      </section>
+
+      <section>
+        <h2>Even More Content</h2>
+        <p>Keep scrolling to test the shrinking effect.</p>
+      </section>
+
+      <section id="demo">
+        <h2>Try It Yourself</h2>
+        <p>(Interactive demo will go here)</p>
+      </section>
+
+      <section id="download">
+        <h2>Coming Soon</h2>
+        <p>Sign up to be notified when Questlore Audio is available!</p>
         <button id="download-btn">Download</button>
-      </section>
-      <!-- Add extra sections to ensure there’s enough scrollable content -->
-      <section>
-        <p>More content for testing scroll behavior...</p>
-      </section>
-      <section>
-        <p>Even more content to scroll!</p>
       </section>
     </main>
   </div>
 
-  <script defer src="app.js"></script>
 </body>
+
 </html>
