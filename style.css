@@ -137,6 +137,21 @@ button {
   transition: background 0.3s, color 0.3s, transform 0.1s linear;
 }
 
+#unity-container {
+  width: 200px;  /* Adjust based on your button size */
+  height: 200px;
+  margin: auto;  /* Center it */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#unity-canvas {
+  width: 100%;
+  height: 100%;
+}
+
 /* === SECTION STYLES === */
 section {
   min-height: 200px;
