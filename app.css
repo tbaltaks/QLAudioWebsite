@@ -80,41 +80,28 @@ body {
 }
 
 /* === HEADER STYLES === */
-#main-header {
+#header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 5vh; /* Maximum header height */
+  height: 10vh; /* Maximum header height */
   background: var(--primary-color);
   color: var(--text-color);
-  padding: 20px 5%;
+  box-sizing: border-box;
+  padding: 20px;
   transition: height 0.1s linear;
   z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-#header-content {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  transition: transform 0.1s linear;
-}
-
-#logo-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
 }
 
 /* === LOGO (SVG) === */
 #logo {
-  height: 100px;
+  height: 6vh;
   width: auto;
   transition: transform 0.1s linear;
 }
@@ -163,7 +150,6 @@ section {
 
 /* === MAIN CONTENT === */
 #content {
-  /* Initially, push content below the header */
-  margin-top: 200px;
+  margin-top: 20px;
   padding: 20px;
 }
