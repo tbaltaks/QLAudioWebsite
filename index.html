@@ -30,26 +30,6 @@
 
     <section>
       <h2>Try it out</h2>
-      <div id="unity-container">
-        <canvas id="unity-canvas"></canvas>
-        <script src="audio-button/Build/QLAudio single button.loader.js"></script>
-        <script>
-          var buildUrl = "audio-button/Build";
-          var config = {
-            dataUrl: buildUrl + "QLAudio single button.data.br",
-            frameworkUrl: buildUrl + "QLAudio single button.framework.js.br",
-            codeUrl: buildUrl + "QLAudio single button.wasm.br",
-            streamingAssetsUrl: "StreamingAssets",
-            companyName: "Tom Baltaks",
-            productName: "Questlore Audio",
-            productVersion: "1.0",
-          };
-      
-          createUnityInstance(document.querySelector("#unity-canvas"), config).then((unityInstance) => {
-            console.log("Unity WebGL Loaded");
-          });
-        </script>
-      </div>
     </section>
 
     <section id="download">
