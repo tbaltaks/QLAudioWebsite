@@ -1,5 +1,5 @@
- /* == COLOUR VARIABLES */
 :root {
+   /* COLOUR VARIABLES */
     --white: #ffffff;
     --off-white: #f1f1f1;
     --light-grey: #cecece;
@@ -32,13 +32,15 @@
     --light-bg: var(--white);
     --light-text: var(--dark-grey);
     --light-section: var(--off-white);
+    --light-primary-color: var(--scarlet);
 
     --dark-bg: var(--black);
     --dark-text: var(--light-grey);
     --dark-section: var(--charcoal);
-    
-    --primary-color: var(--scarlet);
-    --secondary-color: var(--dark-blue);
+    --dark-primary-color: var(--dark-blue);
+
+     /* BORDER ROUNDING */
+    --border-rounding: 24px;
 }
 
 /* === LIGHT MODE === */
@@ -46,17 +48,9 @@ body.light-mode {
   --bg-color: var(--light-bg);
   --text-color: var(--light-text);
   --section-bg: var(--light-section);
-  --button-bg: var(--primary-color);
-  --button-text: white;
-}
-
-/* Light Mode */
-body.light-mode {
-  --bg-color: var(--light-bg);
-  --text-color: var(--light-text);
-  --section-bg: var(--light-section);
-  --button-bg: var(--primary-color);
-  --button-text: white;
+  --button-bg: var(--white);
+  --button-text: var(--charcoal);
+  --primary-colour: var(--light-primary-color);
 }
 
 /* Dark Mode */
@@ -64,8 +58,9 @@ body.dark-mode {
   --bg-color: var(--dark-bg);
   --text-color: var(--dark-text);
   --section-bg: var(--dark-section);
-  --button-bg: var(--secondary-color);
-  --button-text: black;
+  --button-bg: var(--charcoal);
+  --button-text: var(--white);
+  --primary-colour: var(--dark-primary-color);
 }
 
 /* === GENERAL STYLES === */
@@ -116,9 +111,8 @@ body {
 
 /* === BUTTON STYLES === */
 button {
-  padding: 10px 20px;
+  border-radius: var(--border-rounding);
   border: none;
-  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   background: var(--button-bg);
@@ -131,35 +125,81 @@ button {
   font-size: 1rem;
   background: var(--button-bg);
   color: var(--button-text);
-  border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: background 0.3s, color 0.3s, transform 0.1s linear;
 }
 
-#unity-container {
-  width: 200px;  /* Adjust based on your button size */
-  height: 200px;
-  margin: auto;  /* Center it */
-  overflow: hidden;
+.audio-cell {
+  aspect-ratio: 1.65;
+  width: 60%;
+  max-width: 200px;
+  position: relative;
+  font-size: 1.2rem;
+  background-color: var(--button-bg);
+  color: var(--scarlet);
+  cursor: pointer;
+  transition: background 0.3s;
   display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
+  text-align: center;
+  gap: 6px; /* Spacing between visualizer and text */
 }
 
-#unity-canvas {
-  width: 100%;
-  height: 100%;
+/* .audio-cell:hover {
+  background-color: var(--dark-grey);
+} */
+
+/* Pseudo-element for border overlay */
+.audio-cell::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 3px solid var(--scarlet);
+  mask: var(--border-mask, conic-gradient(from 360deg, transparent 360deg, white 0deg));
+  -webkit-mask: var(--border-mask, conic-gradient(from 360deg, transparent 360deg, white 0deg));
+  transition: none;
+}
+
+/* Active state - Animates the mask to reveal the border clockwise */
+.audio-cell.active::after {
+  border-color: var(--scarlet);
+  mask: var(--border-mask);
+  -webkit-mask: var(--border-mask);
+}
+
+.visualizer {
+  display: flex;  
+  justify-content: space-evenly;
+  align-items: flex-end; /* Aligns stems to the bottom */
+  width: 92%; /* Ensures it spans the button */
+  height: 50%; /* Adjust this based on your preferred height */
+}
+
+.stem {
+  aspect-ratio: 1;
+  width: 2.5%;
+  background-color: var(--scarlet); /* Adjust to match design */
+  border-radius: 3px; /* Keeps them rounded */
+  transition: height 0.08s ease-out;
+}
+
+.cell-label {
+  font-size: 1rem;
+  margin: 6px; /* Space between visualizer and text */
 }
 
 /* === SECTION STYLES === */
 section {
   min-height: 200px;
-  padding: 40px;
-  margin: 100px auto 20px;
-  max-width: 600px;
+  padding: 20px;
+  margin: 100px auto 100px;
+  max-width: 60%;
   background: var(--section-bg);
-  border-radius: 12px;
+  border-radius: var(--border-rounding);
   transition: background 0.3s;
 }
 
