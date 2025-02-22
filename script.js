@@ -108,7 +108,6 @@ function playAudio(cell) {
 
   cellData.isPlaying = true;
   fadeGain(cellData.gainNode, 1, fadeDuration);
-  updateVisualizer(cell);
 }
 
 // Stop audio with fade-out
@@ -279,7 +278,7 @@ cells.forEach(cell => {
 
       if (cellData.isActive) {
           playAudio(cell);
-          updateVisualizer();
+          updateVisualizer(cell);
           animateBorder(cell, animationDuration, true);
       } else {
           stopAudio(cell);
