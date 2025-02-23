@@ -133,27 +133,34 @@ function stopAudio(cell) {
 
 // === AUDIO FADE LOGIC ===
 function fadeGain(gainNode, targetValue, durationInSeconds, callback) {
-    if (!gainNode) return;
-    
-    const startValue = gainNode.gain.value;
-    const startTime = audioContext.currentTime;
+  if (!gainNode) return;
+  
+  const startValue = gainNode.gain.value;
+  const startTime = audioContext.currentTime;
 
-    function step() {
-        const elapsed = audioContext.currentTime - startTime;
-        let t = Math.min(elapsed / durationInSeconds, 1);
-        let eased = t * t * (3 - 2 * t);
-        let newValue = startValue + (targetValue - startValue) * eased;
+  // Ensure any ongoing fade is stopped by storing a reference
+  if (gainNode.fadeAnimationFrame) {
+      cancelAnimationFrame(gainNode.fadeAnimationFrame);
+  }
 
-        gainNode.gain.setValueAtTime(newValue, audioContext.currentTime);
+  function step() {
+      const elapsed = audioContext.currentTime - startTime;
+      let t = Math.min(elapsed / durationInSeconds, 1);
+      let eased = t * t * (3 - 2 * t);
+      let newValue = startValue + (targetValue - startValue) * eased;
 
-        if (t < 1) {
-            requestAnimationFrame(step);
-        } else {
-            if (callback) callback();
-        }
-    }
+      gainNode.gain.setValueAtTime(newValue, audioContext.currentTime);
 
-    requestAnimationFrame(step);
+      if (t < 1) {
+          gainNode.fadeAnimationFrame = requestAnimationFrame(step);
+      } else {
+          gainNode.fadeAnimationFrame = null; // Clear reference when fade is complete
+          gainNode.gain.setValueAtTime(targetValue, audioContext.currentTime); // Ensure exact final value
+          if (callback) callback();
+      }
+  }
+
+  gainNode.fadeAnimationFrame = requestAnimationFrame(step);
 }
 
 
@@ -346,6 +353,7 @@ cells.forEach(cell => {
   });
 
   cell.addEventListener("pointerup", (e) => {
+    if (!isPressed) return;
       isPointerDown = false;
       clearTimeout(actionTimer);
       clearTimeout(completeTimer);
