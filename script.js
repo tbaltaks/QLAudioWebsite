@@ -31,7 +31,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const cells = document.querySelectorAll(".audio-cell");
 
 const fadeDuration = 4; // Fade duration in seconds
-const animationDuration = 260; // in milliseconds
+const borderFillDuration = 260; // in milliseconds
 const storedCellData = new Map(); // Store per-cell audio info
 
 // Load and decode audio files for each button
@@ -282,10 +282,10 @@ function toggleAudio(cell) {
   
   if (cellData.isActive) {
       playAudio(cell);
-      animateBorder(cell, animationDuration, true);
+      animateBorder(cell, borderFillDuration, true);
   } else {
       stopAudio(cell);
-      animateBorder(cell, animationDuration, false);
+      animateBorder(cell, borderFillDuration, false);
   }
 }
 
@@ -296,7 +296,7 @@ function soloAudio(cell) {
       cellData.isActive = true;
       cell.classList.add("active");
       playAudio(cell);
-      animateBorder(cell, animationDuration, true);
+      animateBorder(cell, borderFillDuration, true);
   }
   // Turn off every other cell
   storedCellData.forEach((otherData, otherCell) => {
@@ -304,7 +304,7 @@ function soloAudio(cell) {
           otherData.isActive = false;
           otherCell.classList.remove("active");
           stopAudio(otherCell);
-          animateBorder(otherCell, animationDuration, false);
+          animateBorder(otherCell, borderFillDuration, false);
       }
   });
 }
