@@ -353,7 +353,7 @@ cells.forEach(cell => {
   });
 
   cell.addEventListener("pointerup", (e) => {
-    if (!isPressed) return;
+    if (!isPointerDown) return;
       isPointerDown = false;
       clearTimeout(actionTimer);
       clearTimeout(completeTimer);
