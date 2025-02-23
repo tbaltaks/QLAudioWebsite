@@ -124,11 +124,10 @@ function stopAudio(cell) {
               cellData.gainNode.disconnect();
               cellData.sourceNode = null;
               cellData.isPlaying = false;
+              stopVisualizer(cell);
           }
       });
   }
-
-  stopVisualizer(cell);
 }
 
 
@@ -225,7 +224,6 @@ function updateVisualizer(cell) {
     cellData.visualizerRAF = requestAnimationFrame(() => updateVisualizer(cell));
 }
 
-
 // When stopping audio for a cell, cancel its visualizer update.
 function stopVisualizer(cell) {
   const cellData = storedCellData.get(cell);
@@ -269,22 +267,116 @@ function animateBorder(cell, duration, isFillingIn) {
 }
 
 
-// === BUTTON TOGGLE ===
-cells.forEach(cell => {
-  cell.addEventListener("click", () => {
-      const cellData = storedCellData.get(cell);
-      cellData.isActive = !cellData.isActive;
-      cell.classList.toggle("active", cellData.isActive);
+// === QUICK TAP & SLOW TAP FUNCTIONS ===
+function toggleAudio(cell) {
+  const cellData = storedCellData.get(cell);
+  cellData.isActive = !cellData.isActive;
+  cell.classList.toggle("active", cellData.isActive);
+  
+  if (cellData.isActive) {
+      playAudio(cell);
+      animateBorder(cell, animationDuration, true);
+  } else {
+      stopAudio(cell);
+      animateBorder(cell, animationDuration, false);
+  }
+}
 
-      if (cellData.isActive) {
-          playAudio(cell);
-          animateBorder(cell, animationDuration, true);
-      } else {
-          stopAudio(cell);
-          animateBorder(cell, animationDuration, false);
+function soloAudio(cell) {
+  const cellData = storedCellData.get(cell);
+  // Ensure this cell is ON
+  if (!cellData.isActive) {
+      cellData.isActive = true;
+      cell.classList.add("active");
+      playAudio(cell);
+      animateBorder(cell, animationDuration, true);
+  }
+  // Turn off every other cell
+  storedCellData.forEach((otherData, otherCell) => {
+      if (otherCell !== cell && otherData.isActive) {
+          otherData.isActive = false;
+          otherCell.classList.remove("active");
+          stopAudio(otherCell);
+          animateBorder(otherCell, animationDuration, false);
       }
   });
+}
 
+
+// === BUTTON TOGGLE USING POINTER EVENTS ===
+
+// Define thresholds (in milliseconds) for slow tap states
+const durationToAction = 500;   // Time until slow tap is "actioned"
+const durationToComplete = 1000; // Additional time needed to complete slow tap
+
+cells.forEach(cell => {
   // Set initial styles based on data attributes
   cell.style.backgroundColor = cell.dataset.color || "#ccc";
+  
+  // Variables to track pointer state per cell
+  let pointerDownTime = 0;
+  let actionTimer = null;
+  let completeTimer = null;
+  let isSlowTapActioned = false;
+  let isSlowTapCompleted = false;
+  let isPointerDown = false;
+
+  cell.addEventListener("pointerdown", (e) => {
+      isPointerDown = true;
+      pointerDownTime = Date.now();
+      // (Optional) Fire "started" event here
+      
+      // Start timer for "actioned" state
+      actionTimer = setTimeout(() => {
+          if (isPointerDown) {
+              isSlowTapActioned = true;
+              // (Optional) Fire "actioned" event here
+              
+              // Start timer for "completed" state
+              completeTimer = setTimeout(() => {
+                  if (isPointerDown) {
+                      isSlowTapCompleted = true;
+                      // (Optional) Fire "completed" event here
+                      // Execute slow tap logic: force this cell ON and turn off others.
+                      soloAudio(cell);
+                  }
+              }, durationToComplete);
+          }
+      }, durationToAction);
+  });
+
+  cell.addEventListener("pointerup", (e) => {
+      isPointerDown = false;
+      clearTimeout(actionTimer);
+      clearTimeout(completeTimer);
+      
+      if (!isSlowTapActioned) {
+          // "Cancelled": released before action threshold; execute quick tap.
+          // (Optional) Fire "cancelled" event here.
+          toggleAudio(cell);
+      } else if (isSlowTapActioned && !isSlowTapCompleted) {
+          // "Released": slow tap was actioned but not completed; cancel slow tap.
+          // (Optional) Fire "released" event here.
+          // No further action is taken.
+      }
+      // Reset flags for the next interaction.
+      isSlowTapActioned = false;
+      isSlowTapCompleted = false;
+  });
+
+  cell.addEventListener("pointerleave", (e) => {
+      isPointerDown = false;
+      clearTimeout(actionTimer);
+      clearTimeout(completeTimer);
+      isSlowTapActioned = false;
+      isSlowTapCompleted = false;
+  });
+
+  cell.addEventListener("pointercancel", (e) => {
+      isPointerDown = false;
+      clearTimeout(actionTimer);
+      clearTimeout(completeTimer);
+      isSlowTapActioned = false;
+      isSlowTapCompleted = false;
+  });
 });
