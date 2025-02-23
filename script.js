@@ -278,7 +278,6 @@ cells.forEach(cell => {
 
       if (cellData.isActive) {
           playAudio(cell);
-          updateVisualizer(cell);
           animateBorder(cell, animationDuration, true);
       } else {
           stopAudio(cell);
