@@ -321,7 +321,6 @@ cells.forEach(cell => {
   cell.style.backgroundColor = cell.dataset.color || "#ccc";
   
   // Variables to track pointer state per cell
-  let pointerDownTime = 0;
   let actionTimer = null;
   let completeTimer = null;
   let isSlowTapActioned = false;
@@ -330,7 +329,6 @@ cells.forEach(cell => {
 
   cell.addEventListener("pointerdown", (e) => {
       isPointerDown = true;
-      pointerDownTime = Date.now();
       // (Optional) Fire "started" event here
       
       // Start timer for "actioned" state
