@@ -250,27 +250,70 @@ function stopVisualizer(cell) {
 
 
 // === BORDER ANIMATION ===
-function animateBorder(cell, duration, isFillingIn) {
+function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
+  // unfillMode can be "anticlockwise" or "clockwise"
   let startTime;
+  // Get the current fill angle (in degrees) from the CSS variable.
+  let startAngle = getCurrentBorderAngle(cell); // e.g. 180 if half-filled
 
-  function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      let elapsed = timestamp - startTime;
-      let progress = Math.min(elapsed / duration, 1);
-      let angle = 360 * progress;
-
-      let maskValue = isFillingIn
-          ? `conic-gradient(from 0deg, white ${angle}deg, transparent ${angle}deg)`
-          : `conic-gradient(from ${angle}deg, white ${360 - angle}deg, transparent ${360 - angle}deg)`;
-
-      cell.style.setProperty("--border-mask", maskValue);
-
-      if (progress < 1) {
-          requestAnimationFrame(step);
-      }
+  function easeInOut(t) {
+    return t * t * (3 - 2 * t); // Smoothstep easing
   }
 
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    let elapsed = timestamp - startTime;
+    let progress = Math.min(elapsed / duration, 1);
+    let easedProgress = easeInOut(progress);
+    let maskValue = "";
+    
+    if (isFillingIn) {
+      // --- Clockwise Fill ---
+      // Interpolate from current fill to 360
+      let newFill = startAngle + (360 - startAngle) * easedProgress;
+      // Always use the order: white then transparent.
+      maskValue = `conic-gradient(from 0deg, white ${newFill}deg, transparent ${newFill}deg)`;
+      
+    } else {
+      // --- Unfilling ---
+      if (unfillMode === "anticlockwise") {
+        // Anticlockwise unfill: robustly decrease the fill from its current value down to 0.
+        let newFill = startAngle * (1 - easedProgress);
+        // Order remains white then transparent.
+        maskValue = `conic-gradient(from 0deg, white ${newFill}deg, transparent ${newFill}deg)`;
+      } else if (unfillMode === "clockwise") {
+        // Clockwise unfill: ignore the starting fill.
+        // White remains fixed at 360 while transparent increases from 0 to 360.
+        let newT = 360 * easedProgress;
+        maskValue = `conic-gradient(from 0deg, transparent ${newT}deg, white ${newT}deg)`;
+      }
+    }
+    
+    cell.style.setProperty("--border-mask", maskValue);
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    }
+  }
+  
   requestAnimationFrame(step);
+}
+
+function getCurrentBorderAngle(cell) {
+  const computedStyle = getComputedStyle(cell);
+  const maskValue = computedStyle.getPropertyValue("--border-mask").trim();
+  
+  // Check if the gradient is in reversed order (i.e. "transparent" comes before "white")
+  if(maskValue.indexOf("transparent") < maskValue.indexOf("white")) {
+    // For reversed (clockwise unfill) mode, the fill is effectively 360 minus the transparent value.
+    const reversedMatch = maskValue.match(/transparent\s+(\d+)deg/);
+    if(reversedMatch && reversedMatch[1]) {
+      return 360 - parseFloat(reversedMatch[1]);
+    }
+  }
+  
+  // Otherwise, assume standard format (white then transparent)
+  const standardMatch = maskValue.match(/white\s+(\d+)deg/);
+  return standardMatch ? parseFloat(standardMatch[1]) : 0;
 }
 
 
@@ -282,10 +325,10 @@ function toggleAudio(cell) {
   
   if (cellData.isActive) {
       playAudio(cell);
-      animateBorder(cell, borderFillDuration, true);
+      animateBorder(cell, borderFillDuration, true)
   } else {
       stopAudio(cell);
-      animateBorder(cell, borderFillDuration, false);
+      animateBorder(cell, borderFillDuration, false)
   }
 }
 
@@ -296,7 +339,6 @@ function soloAudio(cell) {
       cellData.isActive = true;
       cell.classList.add("active");
       playAudio(cell);
-      animateBorder(cell, borderFillDuration, true);
   }
   // Turn off every other cell
   storedCellData.forEach((otherData, otherCell) => {
@@ -304,7 +346,6 @@ function soloAudio(cell) {
           otherData.isActive = false;
           otherCell.classList.remove("active");
           stopAudio(otherCell);
-          animateBorder(otherCell, borderFillDuration, false);
       }
   });
 }
@@ -336,6 +377,7 @@ cells.forEach(cell => {
           if (isPointerDown) {
               isSlowTapActioned = true;
               // (Optional) Fire "actioned" event here
+              animateBorder(cell, durationToComplete, true)
               
               // Start timer for "completed" state
               completeTimer = setTimeout(() => {
@@ -363,7 +405,7 @@ cells.forEach(cell => {
       } else if (isSlowTapActioned && !isSlowTapCompleted) {
           // "Released": slow tap was actioned but not completed; cancel slow tap.
           // (Optional) Fire "released" event here.
-          // No further action is taken.
+          animateBorder(cell, borderFillDuration, false, "anticlockwise")
       }
       // Reset flags for the next interaction.
       isSlowTapActioned = false;
