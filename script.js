@@ -31,7 +31,6 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const cells = document.querySelectorAll(".audio-cell");
 
 const fadeDuration = 4; // Fade duration in seconds
-const borderFillDuration = 260; // in milliseconds
 const storedCellData = new Map(); // Store per-cell audio info
 
 // Load and decode audio files for each button
@@ -250,9 +249,12 @@ function stopVisualizer(cell) {
 
 
 // === BORDER ANIMATION ===
-function fillBorder(cell, duration, applyEasing = true){
+const borderFillSpeed = 1500; // (degrees per second)
+
+function fillBorder(cell, speed, slowFill = false){
   let startTime;
   let startAngle = getCurrentBorderAngle(cell);
+  const duration = slowFill ? durationToComplete : ((360 - startAngle) / speed) * 1000; // in milliseconds
 
   // Cancel any ongoing animation for this cell
   if (cell._borderAnimationFrame) {
@@ -272,7 +274,7 @@ function fillBorder(cell, duration, applyEasing = true){
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
     let progress = Math.min(elapsed / duration, 1);
-    if (applyEasing) progress = easeInOut(progress);
+    if (!slowFill) progress = easeInOut(progress);
 
     let newAngle = startAngle + (360 - startAngle) * progress;
     let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
@@ -286,9 +288,10 @@ function fillBorder(cell, duration, applyEasing = true){
   }
 }
 
-function unfillBorder(cell, duration, inReverse = false, applyEasing = true) {
+function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
   let startTime;
   let startAngle = getCurrentBorderAngle(cell);
+  const duration = slowUnfill ? durationToComplete : (startAngle / speed) * 1000; // in milliseconds
 
   // Cancel any ongoing animation for this cell
   if (cell._borderAnimationFrame) {
@@ -307,7 +310,7 @@ function unfillBorder(cell, duration, inReverse = false, applyEasing = true) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
     let progress = Math.min(elapsed / duration, 1);
-    if (applyEasing) progress = easeInOut(progress);
+    if (!slowUnfill) progress = easeInOut(progress);
     let maskValue;
 
     if (inReverse) {
@@ -406,10 +409,10 @@ function toggleAudio(cell) {
   
   if (cellData.isActive) {
       playAudio(cell);
-      fillBorder(cell, borderFillDuration)
+      fillBorder(cell, borderFillSpeed)
   } else {
       stopAudio(cell);
-      unfillBorder(cell, borderFillDuration)
+      unfillBorder(cell, borderFillSpeed)
   }
 }
 
@@ -435,8 +438,8 @@ function soloAudio(cell) {
 // === BUTTON TOGGLE USING POINTER EVENTS ===
 
 // Define thresholds (in milliseconds) for slow tap states
-const durationToAction = 500; // Time until slow tap is "actioned"
-const durationToComplete = 1000; // Additional time needed to complete slow tap
+const durationToAction = 250; // Time until slow tap is "actioned"
+const durationToComplete = 800; // Additional time needed to complete slow tap
 
 cells.forEach(cell => {
   // Set initial styles based on data attributes
@@ -461,11 +464,11 @@ cells.forEach(cell => {
 
             // Start to fill this cells border
             const cellData = storedCellData.get(cell);
-            if (!cellData.isActive) fillBorder(cell, durationToComplete, false);
+            if (!cellData.isActive) fillBorder(cell, 0, true);
 
             // Start to unfill all aother active cells borders
             storedCellData.forEach((otherData, otherCell) => {
-              if (otherCell !== cell && otherData.isActive) unfillBorder(otherCell, durationToComplete, true, false);
+              if (otherCell !== cell && otherData.isActive) unfillBorder(otherCell, 0, true, true);
             });
               
               // Start timer for "completed" state
@@ -495,11 +498,11 @@ cells.forEach(cell => {
         const cellData = storedCellData.get(cell);
         const currentFill = getCurrentBorderAngle(cell);
         console.log(currentFill);
-        if (!cellData.isActive) unfillBorder(cell, borderFillDuration, true);
+        if (!cellData.isActive) unfillBorder(cell, 800, true);
         
         // Refill all aother active cells borders
         storedCellData.forEach((otherData, otherCell) => {
-          if (otherCell !== cell && otherData.isActive) fillBorder(otherCell, durationToComplete, true);
+          if (otherCell !== cell && otherData.isActive) fillBorder(otherCell, borderFillSpeed);
         });
       }
 
