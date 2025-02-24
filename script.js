@@ -250,15 +250,101 @@ function stopVisualizer(cell) {
 
 
 // === BORDER ANIMATION ===
-function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
-  // unfillMode can be "anticlockwise" or "clockwise"
+function fillBorder(cell, duration, applyEasing = true){
   let startTime;
-  // Get the current fill angle (in degrees) from the CSS variable.
-  let startAngle = getCurrentBorderAngle(cell); // e.g. 180 if half-filled
+  let startAngle = getCurrentBorderAngle(cell);
+
+  // Cancel any ongoing animation for this cell
+  if (cell._borderAnimationFrame) {
+    cancelAnimationFrame(cell._borderAnimationFrame);
+    cell._borderAnimationFrame = null;
+  }
 
   function easeInOut(t) {
     return t * t * (3 - 2 * t); // Smoothstep easing
   }
+
+  // Trigger the animation
+  cell._borderAnimationFrame = requestAnimationFrame(step);
+
+  // Clockwise fill: animate from startAngle to 360
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    let elapsed = timestamp - startTime;
+    let progress = Math.min(elapsed / duration, 1);
+    if (applyEasing) progress = easeInOut(progress);
+
+    let newAngle = startAngle + (360 - startAngle) * progress;
+    let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
+    cell.style.setProperty("--border-mask", maskValue);
+    
+    if (progress < 1) {
+      cell._borderAnimationFrame = requestAnimationFrame(step);
+    } else {
+      cell._borderAnimationFrame = null;
+    }
+  }
+}
+
+function unfillBorder(cell, duration, inReverse = false) {
+  let startTime;
+  let startAngle = getCurrentBorderAngle(cell);
+
+  // Cancel any ongoing animation for this cell
+  if (cell._borderAnimationFrame) {
+    cancelAnimationFrame(cell._borderAnimationFrame);
+    cell._borderAnimationFrame = null;
+  }
+
+  function easeInOut(t) {
+    return t * t * (3 - 2 * t); // Smoothstep easing
+  }
+
+  // Trigger the animation
+  cell._borderAnimationFrame = requestAnimationFrame(step);
+
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    let elapsed = timestamp - startTime;
+    let progress = Math.min(elapsed / duration, 1);
+    let easedProgress = easeInOut(progress);
+    let maskValue;
+
+    if (inReverse) {
+      // Anticlockwise unfill: decrease fill from startAngle down to 0
+      let newAngle = startAngle * (1 - easedProgress);
+      maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
+    } else {
+      // Clockwise unfill: white stays at 360 while transparent grows from 0 to 360
+      let newAngle = 360 * easedProgress;
+      maskValue = `conic-gradient(from 0deg, transparent ${newAngle}deg, white ${newAngle}deg)`;
+    }
+    
+    cell.style.setProperty("--border-mask", maskValue);
+    
+    if (progress < 1) {
+      cell._borderAnimationFrame = requestAnimationFrame(step);
+    } else {
+      cell._borderAnimationFrame = null;
+    }
+  }
+}
+
+function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
+  let startTime;
+  let startAngle = getCurrentBorderAngle(cell);
+
+  // Cancel any ongoing animation for this cell
+  if (cell._borderAnimationFrame) {
+    cancelAnimationFrame(cell._borderAnimationFrame);
+    cell._borderAnimationFrame = null;
+  }
+
+  function easeInOut(t) {
+    return t * t * (3 - 2 * t); // Smoothstep easing
+  }
+
+  cell._borderAnimationFrame = requestAnimationFrame(step);
 
   function step(timestamp) {
     if (!startTime) startTime = timestamp;
@@ -268,34 +354,29 @@ function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
     let maskValue = "";
     
     if (isFillingIn) {
-      // --- Clockwise Fill ---
-      // Interpolate from current fill to 360
-      let newFill = startAngle + (360 - startAngle) * easedProgress;
-      // Always use the order: white then transparent.
-      maskValue = `conic-gradient(from 0deg, white ${newFill}deg, transparent ${newFill}deg)`;
-      
+      // Clockwise fill: animate from startAngle to 360
+      let newAngle = startAngle + (360 - startAngle) * easedProgress;
+      maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
     } else {
-      // --- Unfilling ---
       if (unfillMode === "anticlockwise") {
-        // Anticlockwise unfill: robustly decrease the fill from its current value down to 0.
-        let newFill = startAngle * (1 - easedProgress);
-        // Order remains white then transparent.
-        maskValue = `conic-gradient(from 0deg, white ${newFill}deg, transparent ${newFill}deg)`;
+        // Anticlockwise unfill: decrease fill from startAngle down to 0
+        let newAngle = startAngle * (1 - easedProgress);
+        maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
       } else if (unfillMode === "clockwise") {
-        // Clockwise unfill: ignore the starting fill.
-        // White remains fixed at 360 while transparent increases from 0 to 360.
-        let newT = 360 * easedProgress;
-        maskValue = `conic-gradient(from 0deg, transparent ${newT}deg, white ${newT}deg)`;
+        // Clockwise unfill: white stays at 360 while transparent grows from 0 to 360
+        let newAngle = 360 * easedProgress;
+        maskValue = `conic-gradient(from 0deg, transparent ${newAngle}deg, white ${newAngle}deg)`;
       }
     }
     
     cell.style.setProperty("--border-mask", maskValue);
+    
     if (progress < 1) {
-      requestAnimationFrame(step);
+      cell._borderAnimationFrame = requestAnimationFrame(step);
+    } else {
+      cell._borderAnimationFrame = null; // Clear when done
     }
   }
-  
-  requestAnimationFrame(step);
 }
 
 function getCurrentBorderAngle(cell) {
@@ -325,10 +406,10 @@ function toggleAudio(cell) {
   
   if (cellData.isActive) {
       playAudio(cell);
-      animateBorder(cell, borderFillDuration, true)
+      fillBorder(cell, borderFillDuration)
   } else {
       stopAudio(cell);
-      animateBorder(cell, borderFillDuration, false)
+      unfillBorder(cell, borderFillDuration)
   }
 }
 
@@ -354,7 +435,7 @@ function soloAudio(cell) {
 // === BUTTON TOGGLE USING POINTER EVENTS ===
 
 // Define thresholds (in milliseconds) for slow tap states
-const durationToAction = 500;   // Time until slow tap is "actioned"
+const durationToAction = 500; // Time until slow tap is "actioned"
 const durationToComplete = 1000; // Additional time needed to complete slow tap
 
 cells.forEach(cell => {
@@ -369,23 +450,22 @@ cells.forEach(cell => {
   let isPointerDown = false;
 
   cell.addEventListener("pointerdown", (e) => {
-      isPointerDown = true;
-      // (Optional) Fire "started" event here
+    // Tap STARTED
+    isPointerDown = true;
       
       // Start timer for "actioned" state
       actionTimer = setTimeout(() => {
           if (isPointerDown) {
-              isSlowTapActioned = true;
-              // (Optional) Fire "actioned" event here
-              animateBorder(cell, durationToComplete, true)
+            // Slow tap ACTIONED
+            isSlowTapActioned = true;
+            fillBorder(cell, durationToComplete, false);
               
               // Start timer for "completed" state
               completeTimer = setTimeout(() => {
                   if (isPointerDown) {
-                      isSlowTapCompleted = true;
-                      // (Optional) Fire "completed" event here
-                      // Execute slow tap logic: force this cell ON and turn off others.
-                      soloAudio(cell);
+                    // Slow tap COMPLETED
+                    isSlowTapCompleted = true;
+                    soloAudio(cell);
                   }
               }, durationToComplete);
           }
@@ -399,14 +479,13 @@ cells.forEach(cell => {
       clearTimeout(completeTimer);
       
       if (!isSlowTapActioned) {
-          // "Cancelled": released before action threshold; execute quick tap.
-          // (Optional) Fire "cancelled" event here.
-          toggleAudio(cell);
+        // Quick tap PERFORMED
+        toggleAudio(cell);
       } else if (isSlowTapActioned && !isSlowTapCompleted) {
-          // "Released": slow tap was actioned but not completed; cancel slow tap.
-          // (Optional) Fire "released" event here.
-          animateBorder(cell, borderFillDuration, false, "anticlockwise")
+        // Slow tap CANCELLED
+        unfillBorder(cell, borderFillDuration, true);
       }
+      
       // Reset flags for the next interaction.
       isSlowTapActioned = false;
       isSlowTapCompleted = false;
