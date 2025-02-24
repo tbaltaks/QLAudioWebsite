@@ -286,7 +286,7 @@ function fillBorder(cell, duration, applyEasing = true){
   }
 }
 
-function unfillBorder(cell, duration, inReverse = false) {
+function unfillBorder(cell, duration, inReverse = false, applyEasing = true) {
   let startTime;
   let startAngle = getCurrentBorderAngle(cell);
 
@@ -307,16 +307,16 @@ function unfillBorder(cell, duration, inReverse = false) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
     let progress = Math.min(elapsed / duration, 1);
-    let easedProgress = easeInOut(progress);
+    if (applyEasing) progress = easeInOut(progress);
     let maskValue;
 
     if (inReverse) {
       // Anticlockwise unfill: decrease fill from startAngle down to 0
-      let newAngle = startAngle * (1 - easedProgress);
+      let newAngle = startAngle * (1 - progress);
       maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
     } else {
       // Clockwise unfill: white stays at 360 while transparent grows from 0 to 360
-      let newAngle = 360 * easedProgress;
+      let newAngle = 360 * progress;
       maskValue = `conic-gradient(from 0deg, transparent ${newAngle}deg, white ${newAngle}deg)`;
     }
     
@@ -386,14 +386,14 @@ function getCurrentBorderAngle(cell) {
   // Check if the gradient is in reversed order (i.e. "transparent" comes before "white")
   if(maskValue.indexOf("transparent") < maskValue.indexOf("white")) {
     // For reversed (clockwise unfill) mode, the fill is effectively 360 minus the transparent value.
-    const reversedMatch = maskValue.match(/transparent\s+(\d+)deg/);
+    const reversedMatch = maskValue.match(/transparent\s+(\d+(?:\.\d+)?)deg/);
     if(reversedMatch && reversedMatch[1]) {
       return 360 - parseFloat(reversedMatch[1]);
     }
   }
   
   // Otherwise, assume standard format (white then transparent)
-  const standardMatch = maskValue.match(/white\s+(\d+)deg/);
+  const standardMatch = maskValue.match(/white\s+(\d+(?:\.\d+)?)deg/);
   return standardMatch ? parseFloat(standardMatch[1]) : 0;
 }
 
@@ -458,7 +458,15 @@ cells.forEach(cell => {
           if (isPointerDown) {
             // Slow tap ACTIONED
             isSlowTapActioned = true;
-            fillBorder(cell, durationToComplete, false);
+
+            // Start to fill this cells border
+            const cellData = storedCellData.get(cell);
+            if (!cellData.isActive) fillBorder(cell, durationToComplete, false);
+
+            // Start to unfill all aother active cells borders
+            storedCellData.forEach((otherData, otherCell) => {
+              if (otherCell !== cell && otherData.isActive) unfillBorder(otherCell, durationToComplete, true, false);
+            });
               
               // Start timer for "completed" state
               completeTimer = setTimeout(() => {
@@ -482,10 +490,19 @@ cells.forEach(cell => {
         // Quick tap PERFORMED
         toggleAudio(cell);
       } else if (isSlowTapActioned && !isSlowTapCompleted) {
-        // Slow tap CANCELLED
-        unfillBorder(cell, borderFillDuration, true);
+        // Slow tap RELEASED
+        // Reset border back to unfilled
+        const cellData = storedCellData.get(cell);
+        const currentFill = getCurrentBorderAngle(cell);
+        console.log(currentFill);
+        if (!cellData.isActive) unfillBorder(cell, borderFillDuration, true);
+        
+        // Refill all aother active cells borders
+        storedCellData.forEach((otherData, otherCell) => {
+          if (otherCell !== cell && otherData.isActive) fillBorder(otherCell, durationToComplete, true);
+        });
       }
-      
+
       // Reset flags for the next interaction.
       isSlowTapActioned = false;
       isSlowTapCompleted = false;
