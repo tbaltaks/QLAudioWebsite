@@ -249,13 +249,13 @@ function stopVisualizer(cell) {
        cellData.visualizerRAF = null;
   }
   // Optionally, reset the stems.
-  const visualizer = cell.querySelector(".visualizer");
-  if (visualizer) {
-       const stems = visualizer.querySelectorAll(".stem");
-       stems.forEach(stem => {
-            stem.style.height = "";
-       });
-  }
+  // const visualizer = cell.querySelector(".visualizer");
+  // if (visualizer) {
+  //      const stems = visualizer.querySelectorAll(".stem");
+  //      stems.forEach(stem => {
+  //           stem.style.height = "";
+  //      });
+  // }
 }
 
 
@@ -474,9 +474,6 @@ const durationToAction = 250; // Time until slow tap is "actioned"
 const durationToComplete = 1000; // Additional time needed to complete slow tap
 
 cells.forEach(cell => {
-  // Set initial styles based on data attributes
-  cell.style.backgroundColor = cell.dataset.color || "#ccc";
-  
   // Variables to track pointer state per cell
   let actionTimer = null;
   let completeTimer = null;

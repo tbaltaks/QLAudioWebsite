@@ -66,6 +66,7 @@ body.dark-mode {
 /* === GENERAL STYLES === */
 body {
   font-family: 'Nunito', sans-serif;
+  margin: 0;
   padding: 0;
   text-align: center;
   background: var(--bg-colour);
@@ -108,14 +109,43 @@ body {
   transform: translateY(0);
 }
 
-/* === APP IMAGE === */
-#app-image {
+/* === APP BACKDROP === */
+.scrolling-grid {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 10 columns */
+  grid-template-rows: repeat(10, 1fr); /* 10 rows */
+  gap: 10px;
+}
+
+/* Non-interactive grid cells */
+.grid-cell {
+  aspect-ratio: 1.65;
+  width: 20vh;
+  background-color: gray; /* Default color, customize per cell */
+  border-radius: 8px; /* Match your .audio-cell style */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none;
+  pointer-events: none; /* Ensures no interaction */
+}
+
+/* #app-image {
   height: 100vh;
   scale: 1.5;
   filter: blur(1px);
   transform: translateY(-20%);
   transition: transform 0.1s linear, opacity 0.1s linear;
-}
+} */
 
 /* === BUTTON STYLES === */
 button {
@@ -126,6 +156,8 @@ button {
   background: var(--button-bg);
   color: var(--button-text);
   transition: background 0.3s, color 0.3s;
+  user-select: none; /* Prevent text selection */
+  -webkit-user-select: none;
 }
 
 #theme-toggle {
@@ -140,8 +172,8 @@ button {
 
 .audio-cell {
   aspect-ratio: 1.65;
-  width: 60%;
-  max-width: 200px;
+  width: 30vh;
+  min-width: 180px;
   position: relative;
   font-size: 1.2rem;
   background-color: var(--button-bg);
@@ -201,7 +233,7 @@ button {
 
 .stem {
   aspect-ratio: 1;
-  width: 2.5%;
+  width: 2%;
   background-color: var(--scarlet); /* Adjust to match design */
   border-radius: 3px; /* Keeps them rounded */
   transition: height 0.08s ease-out;
@@ -225,6 +257,5 @@ section {
 
 /* === MAIN CONTENT === */
 #content {
-  margin-top: 20px;
-  padding: 20px;
+  
 }
