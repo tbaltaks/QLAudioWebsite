@@ -249,7 +249,7 @@ function stopVisualizer(cell) {
 
 
 // === BORDER ANIMATION ===
-const borderFillSpeed = 1500; // (degrees per second)
+const borderFillSpeed = 1200; // (degrees per second)
 
 function fillBorder(cell, speed, slowFill = false){
   let startTime;
@@ -438,7 +438,7 @@ function soloAudio(cell) {
 // === BUTTON TOGGLE USING POINTER EVENTS ===
 // Define thresholds (in milliseconds) for slow tap states
 const durationToAction = 250; // Time until slow tap is "actioned"
-const durationToComplete = 800; // Additional time needed to complete slow tap
+const durationToComplete = 1000; // Additional time needed to complete slow tap
 
 cells.forEach(cell => {
   // Set initial styles based on data attributes
