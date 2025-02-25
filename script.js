@@ -333,7 +333,7 @@ function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
 
 function fillOuterBorder(cell){
   let startTime;
-  let startAngle = getCurrentBorderAngle(cell);
+  let startAngle = getCurrentBorderAngle(cell, true);
 
   // Cancel any ongoing animation for this cell
   if (cell._borderAnimationFrame) {
@@ -361,6 +361,8 @@ function fillOuterBorder(cell){
     if (progress < 1) {
       cell._borderAnimationFrame = requestAnimationFrame(step);
     } else {
+      maskValue = `conic-gradient(from 0deg, white 0deg, transparent 0deg)`;
+      cell.style.setProperty("--outer-border-mask", maskValue);
       cell._borderAnimationFrame = null;
     }
   }
@@ -368,7 +370,7 @@ function fillOuterBorder(cell){
 
 function unfillOuterBorder(cell, speed) {
   let startTime;
-  let startAngle = getCurrentBorderAngle(cell);
+  let startAngle = getCurrentBorderAngle(cell, true);
   const duration = (startAngle / speed) * 1000; // in milliseconds
 
   // Cancel any ongoing animation for this cell
@@ -402,9 +404,9 @@ function unfillOuterBorder(cell, speed) {
   }
 }
 
-function getCurrentBorderAngle(cell) {
+function getCurrentBorderAngle(cell, isOuterBorder = false) {
   const computedStyle = getComputedStyle(cell);
-  const maskValue = computedStyle.getPropertyValue("--border-mask").trim();
+  const maskValue = isOuterBorder ? computedStyle.getPropertyValue("--outer-border-mask").trim() : computedStyle.getPropertyValue("--border-mask").trim();
   
   // Check if the gradient is in reversed order (i.e. "transparent" comes before "white")
   if(maskValue.indexOf("transparent") < maskValue.indexOf("white")) {
