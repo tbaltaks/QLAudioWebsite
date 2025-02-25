@@ -274,7 +274,7 @@ function fillBorder(cell, speed, slowFill = false){
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
     let progress = Math.min(elapsed / duration, 1);
-    if (!slowFill) progress = easeInOut(progress);
+    progress = easeInOut(progress);
 
     let newAngle = startAngle + (360 - startAngle) * progress;
     let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
@@ -310,7 +310,7 @@ function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
     let progress = Math.min(elapsed / duration, 1);
-    if (!slowUnfill) progress = easeInOut(progress);
+    progress = easeInOut(progress);
     let maskValue;
 
     if (inReverse) {
@@ -436,7 +436,6 @@ function soloAudio(cell) {
 
 
 // === BUTTON TOGGLE USING POINTER EVENTS ===
-
 // Define thresholds (in milliseconds) for slow tap states
 const durationToAction = 250; // Time until slow tap is "actioned"
 const durationToComplete = 800; // Additional time needed to complete slow tap

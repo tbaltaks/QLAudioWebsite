@@ -159,16 +159,18 @@ button {
   inset: -1px;
   border-radius: inherit;
   border: 3px solid var(--scarlet);
-  mask: var(--border-mask, conic-gradient(from 360deg, transparent 360deg, white 0deg));
-  -webkit-mask: var(--border-mask, conic-gradient(from 360deg, transparent 360deg, white 0deg));
+  mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
+        /* var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)); */
+  -webkit-mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
+                /* var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)); */
   transition: none;
 }
 
 /* Active state - Animates the mask to reveal the border clockwise */
 .audio-cell.active::after {
   border-color: var(--scarlet);
-  mask: var(--border-mask);
-  -webkit-mask: var(--border-mask);
+  mask: var(--border-mask); /*var(--outer-border-mask);*/
+  -webkit-mask: var(--border-mask); /*var(--outer-border-mask);*/
 }
 
 .visualizer {
