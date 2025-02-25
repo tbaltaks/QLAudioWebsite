@@ -32,12 +32,12 @@
     --light-bg: var(--white);
     --light-text: var(--dark-grey);
     --light-section: var(--off-white);
-    --light-primary-color: var(--scarlet);
+    --light-primary-colour: var(--scarlet);
 
     --dark-bg: var(--black);
     --dark-text: var(--light-grey);
     --dark-section: var(--charcoal);
-    --dark-primary-color: var(--dark-blue);
+    --dark-primary-colour: var(--dark-blue);
 
      /* BORDER ROUNDING */
     --border-rounding: 24px;
@@ -45,22 +45,22 @@
 
 /* === LIGHT MODE === */
 body.light-mode {
-  --bg-color: var(--light-bg);
-  --text-color: var(--light-text);
+  --bg-colour: var(--light-bg);
+  --text-colour: var(--light-text);
   --section-bg: var(--light-section);
   --button-bg: var(--white);
   --button-text: var(--charcoal);
-  --primary-colour: var(--light-primary-color);
+  --primary-colour: var(--light-primary-colour);
 }
 
 /* Dark Mode */
 body.dark-mode {
-  --bg-color: var(--dark-bg);
-  --text-color: var(--dark-text);
+  --bg-colour: var(--dark-bg);
+  --text-colour: var(--dark-text);
   --section-bg: var(--dark-section);
   --button-bg: var(--charcoal);
   --button-text: var(--white);
-  --primary-colour: var(--dark-primary-color);
+  --primary-colour: var(--dark-primary-colour);
 }
 
 /* === GENERAL STYLES === */
@@ -69,8 +69,8 @@ body {
   margin: 0;
   padding: 0;
   text-align: center;
-  background: var(--bg-color);
-  color: var(--text-color);
+  background: var(--bg-colour);
+  color: var(--text-colour);
   transition: background 0.3s, color 0.3s;
 }
 
@@ -81,8 +81,8 @@ body {
   left: 0;
   width: 100%;
   height: 10vh; /* Maximum header height */
-  background: var(--primary-color);
-  color: var(--text-color);
+  background: var(--primary-colour);
+  color: var(--text-colour);
   box-sizing: border-box;
   padding: 20px;
   transition: height 0.1s linear;
@@ -141,7 +141,7 @@ button {
   cursor: pointer;
   transition: background 0.3s;
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   text-align: center;
@@ -156,7 +156,7 @@ button {
 .audio-cell.active::before {
   content: "";
   position: absolute;
-  inset: -3px; /* Adjust this to create the gap/offset you want */
+  inset: -3px;
   border-radius: inherit;
   border: 3px solid var(--scarlet);
   mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
@@ -172,9 +172,7 @@ button {
   border-radius: inherit;
   border: 3px solid var(--scarlet);
   mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
-        /* var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)); */
   -webkit-mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
-                /* var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)); */
   transition: none;
 }
 
