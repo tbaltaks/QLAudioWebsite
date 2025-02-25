@@ -273,8 +273,7 @@ function fillBorder(cell, speed, slowFill = false){
   function step(timestamp) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
-    let progress = Math.min(elapsed / duration, 1);
-    progress = easeInOut(progress);
+    let progress = easeInOut(Math.min(elapsed / duration, 1));
 
     let newAngle = startAngle + (360 - startAngle) * progress;
     let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
@@ -309,8 +308,7 @@ function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
   function step(timestamp) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
-    let progress = Math.min(elapsed / duration, 1);
-    progress = easeInOut(progress);
+    let progress = easeInOut(Math.min(elapsed / duration, 1));
     let maskValue;
 
     if (inReverse) {
@@ -333,9 +331,45 @@ function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
   }
 }
 
-function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
+function fillOuterBorder(cell){
   let startTime;
   let startAngle = getCurrentBorderAngle(cell);
+
+  // Cancel any ongoing animation for this cell
+  if (cell._borderAnimationFrame) {
+    cancelAnimationFrame(cell._outerBorderAnimationFrame);
+    cell._borderAnimationFrame = null;
+  }
+
+  function easeInOut(t) {
+    return t * t * (3 - 2 * t); // Smoothstep easing
+  }
+
+  // Trigger the animation
+  cell._borderAnimationFrame = requestAnimationFrame(step);
+
+  // Clockwise fill: animate from startAngle to 360
+  function step(timestamp) {
+    if (!startTime) startTime = timestamp;
+    let elapsed = timestamp - startTime;
+    let progress = easeInOut(Math.min(elapsed / durationToComplete, 1));
+
+    let newAngle = startAngle + (360 - startAngle) * progress;
+    let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
+    cell.style.setProperty("--outer-border-mask", maskValue);
+    
+    if (progress < 1) {
+      cell._borderAnimationFrame = requestAnimationFrame(step);
+    } else {
+      cell._borderAnimationFrame = null;
+    }
+  }
+}
+
+function unfillOuterBorder(cell, speed) {
+  let startTime;
+  let startAngle = getCurrentBorderAngle(cell);
+  const duration = (startAngle / speed) * 1000; // in milliseconds
 
   // Cancel any ongoing animation for this cell
   if (cell._borderAnimationFrame) {
@@ -347,37 +381,23 @@ function animateBorder(cell, duration, isFillingIn, unfillMode = "clockwise") {
     return t * t * (3 - 2 * t); // Smoothstep easing
   }
 
+  // Trigger the animation
   cell._borderAnimationFrame = requestAnimationFrame(step);
 
+  // Anticlockwise unfill: decrease fill from startAngle down to 0
   function step(timestamp) {
     if (!startTime) startTime = timestamp;
     let elapsed = timestamp - startTime;
-    let progress = Math.min(elapsed / duration, 1);
-    let easedProgress = easeInOut(progress);
-    let maskValue = "";
-    
-    if (isFillingIn) {
-      // Clockwise fill: animate from startAngle to 360
-      let newAngle = startAngle + (360 - startAngle) * easedProgress;
-      maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
-    } else {
-      if (unfillMode === "anticlockwise") {
-        // Anticlockwise unfill: decrease fill from startAngle down to 0
-        let newAngle = startAngle * (1 - easedProgress);
-        maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
-      } else if (unfillMode === "clockwise") {
-        // Clockwise unfill: white stays at 360 while transparent grows from 0 to 360
-        let newAngle = 360 * easedProgress;
-        maskValue = `conic-gradient(from 0deg, transparent ${newAngle}deg, white ${newAngle}deg)`;
-      }
-    }
-    
-    cell.style.setProperty("--border-mask", maskValue);
+    let progress = easeInOut(Math.min(elapsed / duration, 1));
+
+    let newAngle = startAngle * (1 - progress);
+    let maskValue = `conic-gradient(from 0deg, white ${newAngle}deg, transparent ${newAngle}deg)`;
+    cell.style.setProperty("--outer-border-mask", maskValue);
     
     if (progress < 1) {
       cell._borderAnimationFrame = requestAnimationFrame(step);
     } else {
-      cell._borderAnimationFrame = null; // Clear when done
+      cell._borderAnimationFrame = null;
     }
   }
 }
@@ -451,19 +471,21 @@ cells.forEach(cell => {
   let isSlowTapCompleted = false;
   let isPointerDown = false;
 
-  cell.addEventListener("pointerdown", (e) => {
-    // Tap STARTED
+  cell.addEventListener("pointerdown", (e) => { // Tap STARTED
     isPointerDown = true;
       
       // Start timer for "actioned" state
       actionTimer = setTimeout(() => {
-          if (isPointerDown) {
-            // Slow tap ACTIONED
+          if (isPointerDown) { // Slow tap ACTIONED
             isSlowTapActioned = true;
 
             // Start to fill this cells border
             const cellData = storedCellData.get(cell);
-            if (!cellData.isActive) fillBorder(cell, 0, true);
+            if (cellData.isActive) { 
+              fillOuterBorder(cell);
+            } else {
+              fillBorder(cell, 0, true);
+            }
 
             // Start to unfill all aother active cells borders
             storedCellData.forEach((otherData, otherCell) => {
@@ -472,8 +494,7 @@ cells.forEach(cell => {
               
               // Start timer for "completed" state
               completeTimer = setTimeout(() => {
-                  if (isPointerDown) {
-                    // Slow tap COMPLETED
+                  if (isPointerDown) { // Slow tap COMPLETED
                     isSlowTapCompleted = true;
                     soloAudio(cell);
                   }
@@ -488,17 +509,17 @@ cells.forEach(cell => {
       clearTimeout(actionTimer);
       clearTimeout(completeTimer);
       
-      if (!isSlowTapActioned) {
-        // Quick tap PERFORMED
+      if (!isSlowTapActioned) { // Quick tap PERFORMED
         toggleAudio(cell);
-      } else if (isSlowTapActioned && !isSlowTapCompleted) {
-        // Slow tap RELEASED
+      } else if (isSlowTapActioned && !isSlowTapCompleted) { // Slow tap RELEASED
         // Reset border back to unfilled
         const cellData = storedCellData.get(cell);
-        const currentFill = getCurrentBorderAngle(cell);
-        console.log(currentFill);
-        if (!cellData.isActive) unfillBorder(cell, 800, true);
-        
+        if (cellData.isActive) {
+          unfillOuterBorder(cell, 800);
+        } else {
+          unfillBorder(cell, 800, true);
+        }
+
         // Refill all aother active cells borders
         storedCellData.forEach((otherData, otherCell) => {
           if (otherCell !== cell && otherData.isActive) fillBorder(otherCell, borderFillSpeed);

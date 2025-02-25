@@ -152,6 +152,18 @@ button {
   background-color: var(--dark-grey);
 } */
 
+/* Pseudo-element for outer border overlay */
+.audio-cell.active::before {
+  content: "";
+  position: absolute;
+  inset: -5px; /* Adjust this to create the gap/offset you want */
+  border-radius: inherit;
+  border: 3px solid var(--scarlet);
+  mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
+  -webkit-mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
+  transition: none;
+}
+
 /* Pseudo-element for border overlay */
 .audio-cell::after {
   content: "";
