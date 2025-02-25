@@ -23,6 +23,17 @@ themeToggle.addEventListener('click', () => {
 });
 
 
+// Example trigger: toggling the class on scroll
+window.addEventListener('scroll', () => {
+  const logo = document.getElementById('logo');
+  if (window.scrollY > 150) {
+    logo.classList.add('shrink');
+  } else {
+    logo.classList.remove('shrink');
+  }
+});
+
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
