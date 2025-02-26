@@ -97,15 +97,16 @@ body {
 
 /* === LOGO (SVG) === */
 #logo {
-  height: 28vh;
+  width: 34vw;
   transform: translate(12.5vw, 35vh);
-  transition: height 0.5s ease, transform 0.5s ease;
+  transition: width 0.5s ease, transform 0.8s ease;
 }
 
 /* Logo state after transition */
 #logo.shrink {
-  height: 6vh;
-  width: auto;
+  width: 8vw;
+  min-width: 100px;
+  height: auto;
   transform: translateY(0);
 }
 
