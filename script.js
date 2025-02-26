@@ -23,17 +23,6 @@ themeToggle.addEventListener('click', () => {
 });
 
 
-// Example trigger: toggling the class on scroll
-window.addEventListener('scroll', () => {
-  const logo = document.getElementById('logo');
-  if (window.scrollY > 150) {
-    logo.classList.add('shrink');
-  } else {
-    logo.classList.remove('shrink');
-  }
-});
-
-
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
@@ -51,16 +40,36 @@ const rows = 10;
 const columns = 10;
 
 // Function to create the grid cells inside a given grid container
-function createGrid(gridElement, labels, colours) {
-  for (let row = 0; row < rows; row++) {
-    for (let column = 0; column < columns; column++) {
+function createGrid(gridElement, labels, colours) 
+{
+  for (let row = 0; row < rows; row++) 
+  {
+    for (let column = 0; column < columns; column++) 
+    {
       const index = row * columns + column;
       const cell = document.createElement("div");
       cell.className = "grid-cell";
-      // Use the arrays cyclically if they have fewer than 100 entries
-      cell.innerText = labels[index % labels.length];
+
+      // Create cells and add colour (using the arrays cyclically if they have fewer than 100 entries)
       cell.style.color = colours[index % colours.length];
       gridElement.appendChild(cell);
+
+      // Create stem container
+      const visualizer = document.createElement("div");
+      visualizer.className = "visualizer";
+      cell.appendChild(visualizer)
+
+      // Add stems
+      for (let i = 0; i < 16; i++) {
+        const stem = document.createElement("div");
+        stem.classList.add("stem");
+        visualizer.appendChild(stem);
+      }
+
+      // Add label
+      const text = document.createElement("span");
+      text.textContent = labels[index % labels.length];
+      cell.appendChild(text);
     }
   }
 }
@@ -80,7 +89,7 @@ const gridWidth = gridElement.offsetWidth; // Use the actual width of one grid
 
 let lastTimestamp;
 let distance = 0;
-const speed = 5; // pixels per second, adjust as needed
+const speed = 6; // pixels per second, adjust as needed
 
 // Trigger the scroll
 requestAnimationFrame(animateGrid);
@@ -111,6 +120,26 @@ function animateGrid(timestamp) {
 // === ON WINDOW RESIZE EVENT ===
 window.addEventListener('resize', () => {
   gridWidth = gridElement.offsetWidth;
+});
+
+// ON SCROLL EVENT 
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  let delta = window.scrollY - lastScrollY;
+
+  const logo = document.getElementById('logo');
+
+  if (delta > 0 && window.scrollY > 240) // User is scrolling downward
+  {
+    logo.classList.add('shrink');
+  } 
+  else if (delta < 0 && window.scrollY < 480) // User is scrolling upward
+  {
+    logo.classList.remove('shrink');
+  }
+
+  lastScrollY = window.scrollY;
 });
 
 

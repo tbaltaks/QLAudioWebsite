@@ -97,8 +97,8 @@ body {
 
 /* === LOGO (SVG) === */
 #logo {
-  height: 24vh;
-  transform: translate(20vh, 30vh);
+  height: 28vh;
+  transform: translate(12.5vw, 35vh);
   transition: height 0.5s ease, transform 0.5s ease;
 }
 
@@ -116,6 +116,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: relative;
+  filter: blur(3px);
 }
 
 .grid-wrapper {
@@ -136,24 +137,19 @@ body {
 .grid-cell {
   aspect-ratio: 1.65;
   width: 7.5vw;
-  background-color: var(--charcoal);
+  background-color: var(--button-bg);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  gap: 6%; /* Spacing between visualizer and text */
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none;
   pointer-events: none; /* Ensures no interaction */
 }
-
-/* #app-image {
-  height: 100vh;
-  scale: 1.5;
-  filter: blur(1px);
-  transform: translateY(-20%);
-  transition: transform 0.1s linear, opacity 0.1s linear;
-} */
 
 /* === BUTTON STYLES === */
 button {
