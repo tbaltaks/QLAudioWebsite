@@ -37,6 +37,86 @@ window.addEventListener('scroll', () => {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
+// === SCROLLING APP BACKDROP ===
+const labels = [
+  "Label 1", "Label 2", "Label 3", "Label 4", "Label 5",
+  "Label 6", "Label 7", "Label 8", "Label 9", "Label 10"
+];
+const colours = [
+  "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33A8"
+];
+
+// Define grid dimensions
+const rows = 10;
+const columns = 10;
+
+// Function to create the grid cells inside a given grid container
+function createGrid(gridElement, labels, colours) {
+  for (let row = 0; row < rows; row++) {
+    for (let column = 0; column < columns; column++) {
+      const index = row * columns + column;
+      const cell = document.createElement("div");
+      cell.className = "grid-cell";
+      // Use the arrays cyclically if they have fewer than 100 entries
+      cell.innerText = labels[index % labels.length];
+      cell.style.color = colours[index % colours.length];
+      gridElement.appendChild(cell);
+    }
+  }
+}
+
+// Get references to both grid containers
+const grid1 = document.getElementById("grid1");
+const grid2 = document.getElementById("grid2");
+
+// Dynamically instantiate the grid cells in each container
+createGrid(grid1, labels, colours);
+createGrid(grid2, labels, colours);
+
+// Get the wrapper and one grid element (assumed to be duplicated side by side)
+const gridWrapper = document.querySelector('.grid-wrapper');
+const gridElement = document.querySelector('.grid');
+const gridWidth = gridElement.offsetWidth; // Use the actual width of one grid
+
+let lastTimestamp;
+let distance = 0;
+const speed = 5; // pixels per second, adjust as needed
+
+// Trigger the scroll
+requestAnimationFrame(animateGrid);
+
+function animateGrid(timestamp) {
+  if (!lastTimestamp) lastTimestamp = timestamp;
+  const delta = timestamp - lastTimestamp;
+  lastTimestamp = timestamp;
+  
+  // Increase the distance by delta time
+  distance += (delta / 1000) * speed;
+  
+  // When we've scrolled one full grid copy, subtract that width to reset exactly
+  if (distance >= gridWidth) {
+    distance -= gridWidth;
+  }
+  
+  // Use translate3d for smoother performance
+  gridWrapper.style.transform = `translate3d(-${distance}px, 0, 0)`;
+  
+  requestAnimationFrame(animateGrid);
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+// === ON WINDOW RESIZE EVENT ===
+window.addEventListener('resize', () => {
+  gridWidth = gridElement.offsetWidth;
+});
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
 // === AUDIO PLAYBACK ===
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const cells = document.querySelectorAll(".audio-cell");

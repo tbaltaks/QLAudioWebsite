@@ -114,22 +114,30 @@ body {
   width: 100%;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.grid-wrapper {
+  display: flex;
+  width: 200%; /* Holds two copies of the grid */
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* 10 columns */
-  grid-template-rows: repeat(10, 1fr); /* 10 rows */
-  gap: 10px;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+  margin-right: 12px;
 }
 
 /* Non-interactive grid cells */
 .grid-cell {
   aspect-ratio: 1.65;
-  width: 20vh;
-  background-color: gray; /* Default color, customize per cell */
-  border-radius: 8px; /* Match your .audio-cell style */
+  width: 7.5vw;
+  background-color: var(--charcoal);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
