@@ -71,7 +71,7 @@ body {
   text-align: center;
   background: var(--bg-colour);
   color: var(--text-colour);
-  transition: background 0.3s, color 0.3s;
+  transition: 0.3s;
 }
 
 /* === HEADER STYLES === */
