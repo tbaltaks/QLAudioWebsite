@@ -163,11 +163,21 @@ window.addEventListener('scroll', () => {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
-// === AUDIO PLAYBACK ===
+// === AUDIO CELL SETUP ===
+
+const cells = document.querySelectorAll(".audio-cell");
+cells.forEach(cell => {
+  const cellColour = cell.getAttribute("data-colour");
+  
+  if (cellColour) {
+      cell.style.setProperty("--cell-colour", cellColour);
+  }
+});
+
+
+// === AUDIO SETUP
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const cells = document.querySelectorAll(".audio-cell");
-
 const fadeDuration = 4; // Fade duration in seconds
 const storedCellData = new Map(); // Store per-cell audio info
 
