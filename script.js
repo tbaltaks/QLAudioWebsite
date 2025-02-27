@@ -62,6 +62,7 @@ function createGrid(gridElement, labels, colours)
       // Add stems
       for (let i = 0; i < 16; i++) {
         const stem = document.createElement("div");
+        stem.style.backgroundColor = colours[index % colours.length];
         stem.classList.add("stem");
         visualizer.appendChild(stem);
       }
