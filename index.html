@@ -11,18 +11,48 @@
 <body>
   <!-- HEADER -->
   <header id="header">
+
     <img id="logo" src="assets/Questlore Audio Logo.svg" alt="Questlore Audio Logo">
     <button id="theme-toggle">Dark Mode</button>
+
   </header>
 
   <!-- CONTENT -->
   <main id="content">
-    <!-- <img id="app-image" src="assets/Screenshot-dark.png" /> -->
-    <div class="scrolling-grid">
-      <div class="grid-wrapper">
-        <div class="grid" id="grid1"> </div>
-        <div class="grid" id="grid2"> </div>
+
+    <div id="app-backdrop">
+
+      <div class="scrolling-grid">
+        <div class="grid-wrapper">
+          <div class="grid" id="grid1"> </div>
+          <div class="grid" id="grid2"> </div>
+        </div>
       </div>
+
+      <div id=foreground-cell-wrapper>
+        <button id="foreground-cell" class="audio-cell" data-colour="#dc5164" data-audio="assets/Log_Fire_Ambience.m4a">
+          <div class="visualizer">
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+            <div class="stem"></div>
+          </div>
+          <span class="cell-label">Log Fire Ambience</span>
+        </button>
+      </div>
+
     </div>
 
     <section id="intro">
@@ -37,6 +67,7 @@
 
     <section>
       <h2>Try it out</h2>
+
       <button class="audio-cell" data-colour="#dc5164" data-audio="assets/Log_Fire_Ambience.m4a">
         <div class="visualizer">
           <div class="stem"></div>
@@ -58,6 +89,7 @@
         </div>
         <span class="cell-label">Log Fire Ambience</span>
       </button>
+
       <button class="audio-cell" data-colour="#669af6" data-audio="assets/Building_Interior_Music.mp3">
         <div class="visualizer">
           <div class="stem"></div>
@@ -78,7 +110,8 @@
           <div class="stem"></div>
         </div>
         <span class="cell-label">Building Interior Music</span>
-      </button>  
+      </button>
+
     </section>
 
     <section id="download">
@@ -86,6 +119,7 @@
       <p>Sign up to be notified when Questlore Audio is available!</p>
       <button id="download-btn">Download</button>
     </section>
+
   </main>
 
 </body>

@@ -122,6 +122,7 @@ window.addEventListener('resize', () => {
   gridWidth = gridElement.offsetWidth;
 });
 
+
 // ON SCROLL EVENT 
 let lastScrollY = window.scrollY;
 
@@ -147,6 +148,7 @@ window.addEventListener('scroll', () => {
 
 
 // === AUDIO PLAYBACK ===
+
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const cells = document.querySelectorAll(".audio-cell");
 
@@ -544,7 +546,8 @@ function getCurrentBorderAngle(cell, isOuterBorder = false) {
 
 
 // === QUICK TAP & SLOW TAP FUNCTIONS ===
-function toggleAudio(cell) {
+
+function toggleCell(cell) {
   const cellData = storedCellData.get(cell);
   cellData.isActive = !cellData.isActive;
   cell.classList.toggle("active", cellData.isActive);
@@ -558,7 +561,7 @@ function toggleAudio(cell) {
   }
 }
 
-function soloAudio(cell) {
+function soloCell(cell) {
   const cellData = storedCellData.get(cell);
   // Ensure this cell is ON
   if (!cellData.isActive) {
@@ -615,7 +618,7 @@ cells.forEach(cell => {
               completeTimer = setTimeout(() => {
                   if (isPointerDown) { // Slow tap COMPLETED
                     isSlowTapCompleted = true;
-                    soloAudio(cell);
+                    soloCell(cell);
                   }
               }, durationToComplete);
           }
@@ -629,7 +632,7 @@ cells.forEach(cell => {
       clearTimeout(completeTimer);
       
       if (!isSlowTapActioned) { // Quick tap PERFORMED
-        toggleAudio(cell);
+        toggleCell(cell);
       } else if (isSlowTapActioned && !isSlowTapCompleted) { // Slow tap RELEASED
         // Reset border back to unfilled
         const cellData = storedCellData.get(cell);
