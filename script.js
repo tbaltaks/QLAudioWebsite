@@ -1,5 +1,50 @@
 "use strict";
 
+// === ON LOAD EVENT ===
+document.addEventListener('DOMContentLoaded', () => {
+  const foregroundCell = document.querySelector('#foreground-cell-wrapper .audio-cell');
+  const popupText = document.querySelector('#foreground-cell-wrapper .popup-text');
+
+  // Attach a click listener on the foreground cell to hide the popup text
+  foregroundCell.addEventListener('click', () => {
+    if (popupText) {
+      // Start the fade-out/up animation
+      popupText.style.animation = 'popup-out 0.6s forwards';
+    }
+  });
+});
+
+
+// === ON WINDOW RESIZE EVENT ===
+window.addEventListener('resize', () => {
+  gridWidth = gridElement.offsetWidth;
+});
+
+
+// ON SCROLL EVENT 
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  let delta = window.scrollY - lastScrollY;
+
+  const logo = document.getElementById('logo');
+
+  if (delta > 0 && window.scrollY > 240) // User is scrolling downward
+  {
+    logo.classList.add('shrink');
+  } 
+  else if (delta < 0 && window.scrollY < 480) // User is scrolling upward
+  {
+    logo.classList.remove('shrink');
+  }
+
+  lastScrollY = window.scrollY;
+});
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
 // === THEME TOGGLE ===
 const themeToggle = document.getElementById('theme-toggle');
 
@@ -78,15 +123,21 @@ function createGrid(gridElement, labels, colours)
 // Get references to both grid containers
 const grid1 = document.getElementById("grid1");
 const grid2 = document.getElementById("grid2");
+const grid3 = document.getElementById("grid3");
 
 // Dynamically instantiate the grid cells in each container
 createGrid(grid1, labels, colours);
 createGrid(grid2, labels, colours);
+createGrid(grid3, labels, colours);
 
 // Get the wrapper and one grid element (assumed to be duplicated side by side)
 const gridWrapper = document.querySelector('.grid-wrapper');
-const gridElement = document.querySelector('.grid');
-const gridWidth = gridElement.offsetWidth; // Use the actual width of one grid
+const grid1Width = grid1.getBoundingClientRect().width;
+const grid1MarginRight = parseFloat(getComputedStyle(grid1).marginRight);
+const effectiveGridWidth = grid1Width + grid1MarginRight;
+
+console.log(document.getElementById("grid1").getBoundingClientRect().left);
+console.log(document.getElementById("grid2").getBoundingClientRect().left);
 
 let lastTimestamp;
 let distance = 0;
@@ -103,61 +154,14 @@ function animateGrid(timestamp) {
   // Increase the distance by delta time
   distance += (delta / 1000) * speed;
   
-  // When we've scrolled one full grid copy, subtract that width to reset exactly
-  if (distance >= gridWidth) {
-    distance -= gridWidth;
+  if (distance >= effectiveGridWidth) {
+    distance -= effectiveGridWidth;
   }
   
   // Use translate3d for smoother performance
   gridWrapper.style.transform = `translate3d(-${distance}px, 0, 0)`;
-  
   requestAnimationFrame(animateGrid);
 }
-
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-
-// === ON LOAD EVENT ===
-document.addEventListener('DOMContentLoaded', () => {
-  const foregroundCell = document.querySelector('#foreground-cell-wrapper .audio-cell');
-  const popupText = document.querySelector('#foreground-cell-wrapper .popup-text');
-
-  // Attach a click listener on the foreground cell to hide the popup text
-  foregroundCell.addEventListener('click', () => {
-    if (popupText) {
-      // Start the fade-out/up animation
-      popupText.style.animation = 'popup-out 0.6s forwards';
-    }
-  });
-});
-
-
-// === ON WINDOW RESIZE EVENT ===
-window.addEventListener('resize', () => {
-  gridWidth = gridElement.offsetWidth;
-});
-
-
-// ON SCROLL EVENT 
-let lastScrollY = window.scrollY;
-
-window.addEventListener('scroll', () => {
-  let delta = window.scrollY - lastScrollY;
-
-  const logo = document.getElementById('logo');
-
-  if (delta > 0 && window.scrollY > 240) // User is scrolling downward
-  {
-    logo.classList.add('shrink');
-  } 
-  else if (delta < 0 && window.scrollY < 480) // User is scrolling upward
-  {
-    logo.classList.remove('shrink');
-  }
-
-  lastScrollY = window.scrollY;
-});
 
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
