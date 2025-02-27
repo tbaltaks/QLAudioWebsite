@@ -129,7 +129,7 @@ body {
   color: var(--button-text);
   pointer-events: none;  /* So it doesn't interfere with clicks */
   animation: popup-in 0.8s forwards;  /* Animate in on load */
-  animation-delay: 2s; /* Wait this much time before animation starts */
+  animation-delay: 1.2s; /* Wait this much time before animation starts */
 }
 
 /* Keyframes for the popup text appearing */
@@ -182,7 +182,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: relative;
-  filter: blur(1px);
+  filter: blur(1.5px);
 }
 
 .grid-wrapper {
