@@ -144,7 +144,7 @@ body {
   display: flex;
   justify-content: flex-start;
   position: relative;
-  filter: blur(3px);
+  filter: blur(2px);
 }
 
 .grid-wrapper {
@@ -209,7 +209,6 @@ button {
   position: relative;
   font-size: 1.2rem;
   background-color: var(--button-bg);
-  color: var(--scarlet);
   cursor: pointer;
   transition: background 0.3s;
   display: flex;
@@ -230,7 +229,7 @@ button {
   position: absolute;
   inset: -3px;
   border-radius: inherit;
-  border: 3px solid var(--scarlet);
+  border: 3px solid;
   mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
   -webkit-mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
   transition: none;
@@ -242,7 +241,7 @@ button {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  border: 3px solid var(--scarlet);
+  border: 3px solid;
   mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
   -webkit-mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
   transition: none;
@@ -250,7 +249,6 @@ button {
 
 /* Active state - Animates the mask to reveal the border clockwise */
 .audio-cell.active::after {
-  border-color: var(--scarlet);
   mask: var(--border-mask); /*var(--outer-border-mask);*/
   -webkit-mask: var(--border-mask); /*var(--outer-border-mask);*/
 }
@@ -266,7 +264,7 @@ button {
 .stem {
   aspect-ratio: 1;
   width: 2%;
-  background-color: var(--scarlet); /* Adjust to match design */
+  background-color: var(--white); /* Adjust to match design */
   border-radius: 3px; /* Keeps them rounded */
   transition: height 0.08s ease-out;
 }

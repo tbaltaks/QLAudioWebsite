@@ -32,7 +32,7 @@ const labels = [
   "Label 6", "Label 7", "Label 8", "Label 9", "Label 10"
 ];
 const colours = [
-  "#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33A8"
+  "#e2d370", "#9fec83", "#6ce1d3", "#61b7ff", "#6c7ded", "#8d45f3", "#d046e9", "#dc4f82", "#e46868", "#f7ad7b"
 ];
 
 // Define grid dimensions
