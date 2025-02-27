@@ -29,9 +29,9 @@
     --tangerine: #ed896e;
     --orange: #f7ad7b;
 
-    --light-bg: var(--white);
+    --light-bg: var(--off-white);
     --light-text: var(--dark-grey);
-    --light-section: var(--off-white);
+    --light-section: var(--white);
     --light-primary-colour: var(--scarlet);
 
     --dark-bg: var(--black);
@@ -39,7 +39,6 @@
     --dark-section: var(--charcoal);
     --dark-primary-colour: var(--dark-blue);
 
-     /* BORDER ROUNDING */
     --border-rounding: 24px;
 }
 
@@ -51,6 +50,7 @@ body.light-mode {
   --button-bg: var(--white);
   --button-text: var(--charcoal);
   --primary-colour: var(--light-primary-colour);
+  --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
 }
 
 /* Dark Mode */
@@ -61,6 +61,7 @@ body.dark-mode {
   --button-bg: var(--charcoal);
   --button-text: var(--off-white);
   --primary-colour: var(--dark-primary-colour);
+  --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
 }
 
 /* === GENERAL STYLES === */
@@ -71,7 +72,7 @@ body {
   text-align: center;
   background: var(--bg-colour);
   color: var(--text-colour);
-  transition: 0.3s;
+  transition: background 0.15s;
 }
 
 /* === HEADER STYLES === */
@@ -170,7 +171,7 @@ body {
   left: 0;
   width: 100%;
   height: 120%;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background: var(--backdrop-gradient);
   pointer-events: none;
   z-index: 1;
 }
