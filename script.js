@@ -450,6 +450,9 @@ function unfillBorder(cell, speed, inReverse = false, slowUnfill = false) {
     return t * t * (3 - 2 * t); // Smoothstep easing
   }
 
+  // Clear outer border
+  cell.style.setProperty("--outer-border-mask", `conic-gradient(from 0deg, white 0deg, transparent 0deg)`);
+
   // Trigger the animation
   cell._borderAnimationFrame = requestAnimationFrame(step);
 
