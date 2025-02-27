@@ -271,6 +271,7 @@ function stopAudio(cell) {
               cellData.gainNode.disconnect();
               cellData.sourceNode = null;
               cellData.isPlaying = false;
+              updateVisualizer(cell);
               stopVisualizer(cell);
           }
       });
