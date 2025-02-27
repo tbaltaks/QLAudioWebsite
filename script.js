@@ -117,6 +117,21 @@ function animateGrid(timestamp) {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
+// === ON LOAD EVENT ===
+document.addEventListener('DOMContentLoaded', () => {
+  const foregroundCell = document.querySelector('#foreground-cell-wrapper .audio-cell');
+  const popupText = document.querySelector('#foreground-cell-wrapper .popup-text');
+
+  // Attach a click listener on the foreground cell to hide the popup text
+  foregroundCell.addEventListener('click', () => {
+    if (popupText) {
+      // Start the fade-out/up animation
+      popupText.style.animation = 'popup-out 0.6s forwards';
+    }
+  });
+});
+
+
 // === ON WINDOW RESIZE EVENT ===
 window.addEventListener('resize', () => {
   gridWidth = gridElement.offsetWidth;

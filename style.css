@@ -137,6 +137,44 @@ body {
   z-index: 10; /* Ensure it’s above the scrolling background */
 }
 
+.popup-text {
+  position: absolute;
+  bottom: 100%;  /* Position it above the button */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px); /* Start a bit below final position */
+  opacity: 0;
+  font-size: 1.2rem;
+  color: var(--button-text);
+  pointer-events: none;  /* So it doesn't interfere with clicks */
+  animation: popup-in 0.8s forwards;  /* Animate in on load */
+  animation-delay: 2s; /* Wait this much time before animation starts */
+}
+
+/* Keyframes for the popup text appearing */
+@keyframes popup-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Keyframes for the popup text disappearing */
+@keyframes popup-out {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
+
 /* === APP BACKDROP === */
 .scrolling-grid {
   width: 100%;
