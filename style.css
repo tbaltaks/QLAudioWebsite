@@ -321,7 +321,7 @@ button {
   aspect-ratio: 1;
   width: 2.4%;
   background-color: var(--cell-colour); /* Adjust to match design */
-  border-radius: 5px; /* Keeps them rounded */
+  border-radius: 10px; /* Keeps them rounded */
   transition: height 0.08s ease-out;
 }
 
@@ -344,4 +344,15 @@ section {
 /* === MAIN CONTENT === */
 #content {
   
+}
+
+#intro-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#app-image {
+  max-height: 300px;
 }

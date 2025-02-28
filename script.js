@@ -386,7 +386,9 @@ function updateVisualizer(cell) {
     bandedData.forEach((value, i) => {
         const normalizedValue = value / 220;
         const additionalHeight = Math.min(normalizedValue * MAX_EXTRA_HEIGHT, MAX_EXTRA_HEIGHT);
-        cellData.stems[i].style.height = `${baseStemHeight + additionalHeight}px`;
+        const newHeight = baseStemHeight + additionalHeight;
+        cellData.stems[i].style.height = `${newHeight}px`;
+        cellData.stems[i].style.borderRadius = `${newHeight * 0.5}px`;
     });
 
     // Store RAF ID in cellData for potential cancellation
@@ -400,14 +402,15 @@ function stopVisualizer(cell) {
        cancelAnimationFrame(cellData.visualizerRAF);
        cellData.visualizerRAF = null;
   }
-  // Optionally, reset the stems.
-  // const visualizer = cell.querySelector(".visualizer");
-  // if (visualizer) {
-  //      const stems = visualizer.querySelectorAll(".stem");
-  //      stems.forEach(stem => {
-  //           stem.style.height = "";
-  //      });
-  // }
+
+  // Reset the stems.
+  const visualizer = cell.querySelector(".visualizer");
+  if (visualizer) {
+       const stems = visualizer.querySelectorAll(".stem");
+       stems.forEach(stem => {
+            stem.style.height = cellData.baseStemHeight;
+       });
+  }
 }
 
 
