@@ -99,6 +99,16 @@ body {
   align-items: center;
 }
 
+#theme-toggle {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, transform 0.1s linear;
+}
+
 
 /* === LOGO (SVG) === */
 #logo {
@@ -234,7 +244,7 @@ body {
   pointer-events: none; /* Ensures no interaction */
 }
 
-/* === BUTTON STYLES === */
+/* === CLASS STYLES === */
 button {
   border-radius: var(--border-rounding);
   border: none;
@@ -245,16 +255,6 @@ button {
   transition: background 0.3s, color 0.3s;
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none;
-}
-
-#theme-toggle {
-  padding: 8px 16px;
-  font-size: 1rem;
-  background: var(--button-bg);
-  color: var(--button-text);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s, transform 0.1s linear;
 }
 
 .audio-cell {
