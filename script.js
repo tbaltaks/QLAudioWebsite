@@ -50,6 +50,7 @@ const themeToggle = document.getElementById('theme-toggle');
 
 // Check for saved theme preference
 const currentTheme = localStorage.getItem('theme') || 'light-mode';
+document.body.classList.remove('light-mode', 'dark-mode'); // remove any pre-existing classes
 document.body.classList.add(currentTheme);
 
 // Function to update button text
@@ -62,8 +63,17 @@ updateButtonText();
 
 // Toggle Theme on Click
 themeToggle.addEventListener('click', () => {
-    const isDark = document.body.classList.toggle('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark-mode' : 'light-mode');
+    if (document.body.classList.contains('dark-mode')) {
+        // Switch to light mode
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light-mode');
+    } else {
+        // Switch to dark mode
+        document.body.classList.remove('light-mode');
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark-mode');
+    }
     updateButtonText();
 });
 

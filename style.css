@@ -1,5 +1,4 @@
 :root {
-   /* COLOUR VARIABLES */
     --white: #ffffff;
     --off-white: #f1f1f1;
     --light-grey: #cecece;
@@ -42,7 +41,8 @@
     --border-rounding: 24px;
 }
 
-/* === LIGHT MODE === */
+
+/* === THEME SETTINGS === */
 body.light-mode {
   --bg-colour: var(--light-bg);
   --text-colour: var(--light-text);
@@ -51,9 +51,9 @@ body.light-mode {
   --button-text: var(--charcoal);
   --primary-colour: var(--light-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  --logo-brightness: 0.4;
 }
 
-/* Dark Mode */
 body.dark-mode {
   --bg-colour: var(--dark-bg);
   --text-colour: var(--dark-text);
@@ -62,7 +62,9 @@ body.dark-mode {
   --button-text: var(--off-white);
   --primary-colour: var(--dark-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  --logo-brightness: 1;
 }
+
 
 /* === GENERAL STYLES === */
 body {
@@ -96,6 +98,7 @@ body {
   align-items: center;
 }
 
+
 /* === LOGO (SVG) === */
 #logo {
   width: 36vw;
@@ -108,10 +111,11 @@ body {
 #logo.shrink {
   width: 8vw;
   /* min-width: 100px; */
-  height: auto;
   transform: translateY(0);
 }
 
+
+/* === SLASH SCREEN CELL === */
 #foreground-cell-wrapper {
   position: absolute;
   top: 50%;
@@ -127,7 +131,7 @@ body {
   transform: translateX(-50%) translateY(10px); /* Start a bit below final position */
   opacity: 0;
   font-size: 1.2rem;
-  color: var(--button-text);
+  color: var(--text-colour);
   pointer-events: none;  /* So it doesn't interfere with clicks */
   animation: popup-in 0.8s forwards;  /* Animate in on load */
   animation-delay: 1.5s; /* Wait this much time before animation starts */
