@@ -106,8 +106,7 @@ body {
   aspect-ratio: 2.536;
   /* min-width: 300px; */
 
-  background: var(--logo-colour);
-
+  background: var(--primary-colour);
   -webkit-mask-image: url("assets/QLAudioLogo.svg");
   mask-image: url("assets/QLAudioLogo.svg");
   -webkit-mask-size: contain;
