@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === ON WINDOW RESIZE EVENT ===
 window.addEventListener('resize', () => {
-  gridWidth = gridElement.offsetWidth;
+  grid1Width = gridElement.offsetWidth;
 });
 
 

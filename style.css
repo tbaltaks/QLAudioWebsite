@@ -36,7 +36,7 @@
     --dark-bg: var(--black);
     --dark-text: var(--light-grey);
     --dark-section: var(--charcoal);
-    --dark-primary-colour: var(--dark-blue);
+    --dark-primary-colour: var(--scarlet);
 
     --border-rounding: 24px;
 }
@@ -51,7 +51,7 @@ body.light-mode {
   --button-text: var(--charcoal);
   --primary-colour: var(--light-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-  --logo-brightness: 0.4;
+  --logo-colour: var(--scarlet);
 }
 
 body.dark-mode {
@@ -62,7 +62,7 @@ body.dark-mode {
   --button-text: var(--off-white);
   --primary-colour: var(--dark-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  --logo-brightness: 1;
+  --logo-colour: var(--white);
 }
 
 
@@ -102,7 +102,21 @@ body {
 /* === LOGO (SVG) === */
 #logo {
   width: 36vw;
+  height: auto;
+  aspect-ratio: 2.536;
   /* min-width: 300px; */
+
+  background: var(--logo-colour);
+
+  -webkit-mask-image: url("assets/QLAudioLogo.svg");
+  mask-image: url("assets/QLAudioLogo.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+
   transform: translate(14vw, 35vh);
   transition: width 0.5s ease, transform 0.8s ease;
 }
