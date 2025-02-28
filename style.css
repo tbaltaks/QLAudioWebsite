@@ -31,13 +31,14 @@
     --light-bg: var(--off-white);
     --light-text: var(--dark-grey);
     --light-section: var(--white);
-    --light-primary-colour: var(--scarlet);
+    /* --light-primary-colour: var(--scarlet); */
 
     --dark-bg: var(--black);
     --dark-text: var(--light-grey);
     --dark-section: var(--charcoal);
-    --dark-primary-colour: var(--scarlet);
+    /* --dark-primary-colour: var(--scarlet); */
 
+    --primary-colour: var(--scarlet);
     --border-rounding: 24px;
 }
 
@@ -49,7 +50,7 @@ body.light-mode {
   --section-bg: var(--light-section);
   --button-bg: var(--white);
   --button-text: var(--charcoal);
-  --primary-colour: var(--light-primary-colour);
+  /* --primary-colour: var(--light-primary-colour); */
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
   --logo-colour: var(--scarlet);
 }
@@ -60,7 +61,7 @@ body.dark-mode {
   --section-bg: var(--dark-section);
   --button-bg: var(--charcoal);
   --button-text: var(--off-white);
-  --primary-colour: var(--dark-primary-colour);
+  /* --primary-colour: var(--dark-primary-colour); */
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   --logo-colour: var(--white);
 }
@@ -318,9 +319,9 @@ button {
 
 .stem {
   aspect-ratio: 1;
-  width: 2%;
+  width: 2.4%;
   background-color: var(--cell-colour); /* Adjust to match design */
-  border-radius: 3px; /* Keeps them rounded */
+  border-radius: 5px; /* Keeps them rounded */
   transition: height 0.08s ease-out;
 }
 
