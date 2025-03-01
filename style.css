@@ -1,10 +1,12 @@
 :root {
     --white: #ffffff;
+    --near-white: #f8f8f8;
     --off-white: #f1f1f1;
     --light-grey: #cecece;
     --mid-grey: #9e9e9e;
     --grey: #7a7a7a;
     --dark-grey: #686868;
+    --light-charcoal: #2a2a2a;
     --charcoal: #222222;
     --black: #171717;
 
@@ -108,6 +110,7 @@ body.light-mode {
   --button-text: var(--charcoal);
   --primary-colour: var(--light-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+  --alt-section-bg: var(--near-white);
 }
 
 body.dark-mode {
@@ -118,6 +121,7 @@ body.dark-mode {
   --button-text: var(--off-white);
   --primary-colour: var(--dark-primary-colour);
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  --alt-section-bg: var(--light-charcoal);
 }
 
 
@@ -320,7 +324,7 @@ body {
   width: 94px;
 
   font-family: 'Cocogoose', sans-serif;
-  font-size: 0.6em;
+  font-size: 0.5em;
   line-height: 1.2em;
 
   background-color: var(--button-bg);
@@ -364,9 +368,13 @@ button {
 
   width: 216px;
   height: 130px;
+  min-width: 216px;
+  min-height: 130px;
+  max-width: 216px;
+  max-height: 130px;
 
   font-family: 'Cocogoose', sans-serif;
-  font-size: 1.1em;
+  font-size: 1em;
   line-height: 1.2em;
 
   color: var(--cell-colour);
@@ -449,6 +457,12 @@ button {
   overflow: hidden;
 }
 
+.arrow-left {
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 30px solid var(--text-colour);
+}
+
 
 /* === SECTION STYLES === */
 section {
@@ -501,7 +515,36 @@ section {
 
 #app-image {
   align-self: center;
+
   max-height: 300px;
+
+  transition: 3s;
 }
 
 /* Demo section */
+#demo::before {
+  position: absolute;
+
+  top: 40%; /* Adjust as needed */
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: var(--alt-section-bg); /* Second colour */
+
+  content: "";
+}
+
+#demo {
+  position: relative;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+
+  background: var(--section-bg); /* Main background colour */
+
+  overflow: hidden; /* Prevents ::before from spilling outside */
+}

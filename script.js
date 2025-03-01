@@ -47,11 +47,15 @@ window.addEventListener('scroll', () => {
 
 // === THEME TOGGLE ===
 const themeToggle = document.getElementById('theme-toggle');
+const appImage = document.getElementById('app-image');
 
 // Check for saved theme preference
 const currentTheme = localStorage.getItem('theme') || 'light-mode';
 document.body.classList.remove('light-mode', 'dark-mode'); // remove any pre-existing classes
 document.body.classList.add(currentTheme);
+
+// Set app image to match theme
+appImage.src = localStorage.getItem('theme') === 'light-mode' ? 'assets/iPad-app-light.png' : 'assets/iPad-app-dark.png';
 
 // Function to update button text
 const updateButtonText = () => {
@@ -67,12 +71,14 @@ themeToggle.addEventListener('click', () => {
         // Switch to light mode
         document.body.classList.remove('dark-mode');
         document.body.classList.add('light-mode');
-        localStorage.setItem('theme', 'light-mode');
+        localStorage.setItem('theme', 'light-mode'); // Set theme
+        appImage.src = 'assets/iPad-app-light.png'; // Set app image to match
     } else {
         // Switch to dark mode
         document.body.classList.remove('light-mode');
         document.body.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark-mode');
+        localStorage.setItem('theme', 'dark-mode'); // Set theme
+        appImage.src = 'assets/iPad-app-dark.png'; // Set app image to match
     }
     updateButtonText();
 });
