@@ -184,6 +184,7 @@ body {
   width: 36vw;
 
   background: var(--primary-colour);
+  shape-rendering: optimizeSpeed;
 
   -webkit-mask-image: url("assets/QLAudioLogo.svg");
   mask-image: url("assets/QLAudioLogo.svg");
