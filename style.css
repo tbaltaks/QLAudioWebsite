@@ -350,7 +350,12 @@ section {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
+}
+
+#intro-heading {
+  font-size: 3rem;
+  
 }
 
 #app-image {

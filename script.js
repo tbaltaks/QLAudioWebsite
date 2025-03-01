@@ -179,6 +179,7 @@ function animateGrid(timestamp) {
 
 // === AUDIO CELL SETUP ===
 
+// === SET CELL COLOUR ===
 const cells = document.querySelectorAll(".audio-cell");
 cells.forEach(cell => {
   const cellColour = cell.getAttribute("data-colour");
@@ -189,8 +190,7 @@ cells.forEach(cell => {
 });
 
 
-// === AUDIO SETUP
-
+// === AUDIO AND CELL DATA SETUP ===
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const fadeDuration = 4; // Fade duration in seconds
 const storedCellData = new Map(); // Store per-cell audio info
@@ -223,6 +223,10 @@ async function loadAudio(cell) {
         const cellData = storedCellData.get(cell);
         cellData.MAX_EXTRA_HEIGHT = cellData.visHeight * 0.55;
         cellData.MAX_TOTAL_HEIGHT = cellData.baseStemHeight + cellData.MAX_EXTRA_HEIGHT;
+
+        cellData.stems.forEach((stem, i) => {
+          console.log(`Cell [${cell.dataset.audio}] - Stem ${i} border-radius:`, getComputedStyle(stem).borderRadius);
+      });
 
     } catch (error) {
         console.error("Error loading audio:", error);
