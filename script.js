@@ -2,6 +2,7 @@
 
 // === ON LOAD EVENT ===
 document.addEventListener('DOMContentLoaded', () => {
+  // ANIMATE POPUP TEXT
   const foregroundCell = document.querySelector('#foreground-cell-wrapper .audio-cell');
   const popupText = document.querySelector('#foreground-cell-wrapper .popup-text');
 
@@ -12,6 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
       popupText.style.animation = 'popup-out 0.6s forwards';
     }
   });
+
+  // CALCULATE DEMO SECTION ALT COLOUR
+  const demo = document.getElementById('demo');
+
+  const preambleTextHeight = document.getElementById('demo-preamble').offsetHeight;
+  const sectionStyles = window.getComputedStyle(demo)
+  const sectionPadding = parseFloat(sectionStyles.getPropertyValue("padding-top")) + parseFloat(sectionStyles.getPropertyValue("padding-bottom"));
+
+  const beforeTopValue = preambleTextHeight + sectionPadding;
+  demo.style.setProperty("--before-top", `${beforeTopValue}px`);
 });
 
 
@@ -21,7 +32,7 @@ window.addEventListener('resize', () => {
 });
 
 
-// ON SCROLL EVENT 
+// === ON SCROLL EVENT ===
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
