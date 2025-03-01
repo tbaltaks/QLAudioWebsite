@@ -83,8 +83,7 @@ themeToggle.addEventListener('click', () => {
 
 // === SCROLLING APP BACKDROP ===
 const labels = [
-  "Label 1", "Label 2", "Label 3", "Label 4", "Label 5",
-  "Label 6", "Label 7", "Label 8", "Label 9", "Label 10"
+  "Bing Bong Music", "Label", "Oh WOW Ambience",
 ];
 const colours = [
   "#e2d370", "#9fec83", "#6ce1d3", "#61b7ff", "#6c7ded", "#8d45f3", "#d046e9", "#dc4f82", "#e46868", "#f7ad7b"
@@ -123,7 +122,8 @@ function createGrid(gridElement, labels, colours)
       }
 
       // Add label
-      const text = document.createElement("span");
+      const text = document.createElement("div");
+      text.className = "cell-label";
       text.textContent = labels[index % labels.length];
       cell.appendChild(text);
     }

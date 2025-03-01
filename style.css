@@ -123,42 +123,54 @@ body.dark-mode {
 
 /* === GENERAL STYLES === */
 body {
-  font-family: 'Eina03', sans-serif;
-  font-weight: 300;
+  text-align: center;
+
   margin: 0;
   padding: 0;
-  text-align: center;
-  background: var(--bg-colour);
+
+  font-family: 'Eina03', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  
   color: var(--text-colour);
+  background: var(--bg-colour);
+
   transition: background 0.15s;
 }
 
 /* === HEADER STYLES === */
 #header {
   position: fixed;
+
   top: 0;
   left: 0;
-  width: 100%;
-  height: 10vh; /* Maximum header height */
-  background: transparent;
-  color: var(--text-colour);
   box-sizing: border-box;
   padding: 20px;
-  transition: height 0.1s linear;
-  z-index: 1000;
-  overflow-y: visible;
-
+  
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+
+  width: 100%;
+  height: 10vh; /* Maximum header height */
+
+  color: var(--text-colour);
+  background: transparent;
+  overflow-y: visible;
+
+  z-index: 1000;
+  transition: height 0.1s linear;
 }
 
 #theme-toggle {
   padding: 12px 15px 8px;
-  background: var(--button-bg);
+
   color: var(--button-text);
+  background: var(--button-bg);
   border-radius: 12px;
+
   cursor: pointer;
   transition: background 0.3s, color 0.3s, transform 0.1s linear;
 }
@@ -166,12 +178,13 @@ body {
 
 /* === LOGO (SVG) === */
 #logo {
-  width: 36vw;
-  height: auto;
+  transform: translate(14vw, 35vh);
+
   aspect-ratio: 2.536;
-  /* min-width: 300px; */
+  width: 36vw;
 
   background: var(--primary-colour);
+
   -webkit-mask-image: url("assets/QLAudioLogo.svg");
   mask-image: url("assets/QLAudioLogo.svg");
   -webkit-mask-size: contain;
@@ -181,32 +194,34 @@ body {
   -webkit-mask-position: center;
   mask-position: center;
 
-  transform: translate(14vw, 35vh);
   transition: width 0.5s ease, transform 0.8s ease;
 }
 
 /* Logo state after transition */
 #logo.shrink {
-  width: 8vw;
-  /* min-width: 100px; */
   transform: translateY(0);
+
+  width: 8vw;
 }
 
 
 /* === SLASH SCREEN CELL === */
 #foreground-cell-wrapper {
   position: absolute;
+  transform: translate(100%, -90%);
+  
   top: 50%;
   left: 50%;
-  transform: translate(100%, -90%);
+
   z-index: 10; /* Ensure it’s above the scrolling background */
 }
 
 .popup-text {
   position: absolute;
+  transform: translateX(-50%) translateY(10px); /* Start a bit below final position */
+
   bottom: 100%;  /* Position it above the button */
   left: 50%;
-  transform: translateX(-50%) translateY(10px); /* Start a bit below final position */
 
   font-size: 1.1rem;
 
@@ -250,27 +265,34 @@ body {
 }
 
 #app-backdrop::before {
-  content: ""; 
   position: absolute;
+
   top: 0;
   left: 0;
+
   width: 100%;
   height: 120%;
+
   background: var(--backdrop-gradient);
-  pointer-events: none;
+
+  content: "";
   z-index: 1;
+  pointer-events: none;
 }
 
 .scrolling-grid {
-  width: 100%;
-  overflow: hidden;
   display: flex;
   justify-content: flex-start;
+
+  width: 100%;
+
+  overflow: hidden;
   filter: blur(1.5px);
 }
 
 .grid-wrapper {
   display: flex;
+
   width: 200%; /* Holds two copies of the grid */
 }
 
@@ -278,6 +300,7 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
+
   gap: 12px;
   margin-top: 12px;
   margin-right: 12px;
@@ -289,22 +312,22 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  text-align: center;
 
   gap: 6%; /* Spacing between visualizer and text */
 
-  aspect-ratio: 1.65;
-  width: 7.5vw;
+  aspect-ratio: 1.66;
+  width: 94px;
 
   font-family: 'Cocogoose', sans-serif;
-  font-size: 0.6rem;
+  font-size: 0.6em;
+  line-height: 1.2em;
 
   background-color: var(--button-bg);
   border-radius: 10px;
 
+  pointer-events: none; /* Ensures no interaction */
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none;
-  pointer-events: none; /* Ensures no interaction */
 }
 
 
@@ -324,9 +347,9 @@ button {
   border: none;
 
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none;
+  transition: background 0.3s, color 0.3s;
 }
 
 /* Audio Cell */
@@ -343,6 +366,7 @@ button {
 
   font-family: 'Cocogoose', sans-serif;
   font-size: 1.1em;
+  line-height: 1.2em;
 
   color: var(--cell-colour);
   background-color: var(--button-bg);
@@ -353,43 +377,49 @@ button {
 
 /* Pseudo-element for outer border overlay */
 .audio-cell.active::before {
-  content: "";
   position: absolute;
-  inset: -3px;
+
   border-radius: inherit;
   border: 3px solid var(--cell-colour);
+  inset: -3px;
+
   mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
   -webkit-mask: var(--outer-border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg));
+
+  content: "";
   transition: none;
 }
 
 /* Pseudo-element for border overlay */
 .audio-cell::after {
-  content: "";
   position: absolute;
-  inset: -1px;
+
   border-radius: inherit;
   border: 3px solid var(--cell-colour);
+  inset: -1px;
+
   mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
   -webkit-mask: var(--border-mask, conic-gradient(from 0deg, transparent 360deg, white 0deg)) ;
+
+  content: "";
   transition: none;
 }
 
 /* Active state - Animates the mask to reveal the border clockwise */
 .audio-cell.active::after {
-  mask: var(--border-mask); /*var(--outer-border-mask);*/
-  -webkit-mask: var(--border-mask); /*var(--outer-border-mask);*/
+  mask: var(--border-mask);
+  -webkit-mask: var(--border-mask);
 }
 
 .visualizer {
-  margin-top: 17px;
-
-  width: 86%; 
-  height: 40%;
-
   display: flex;  
   justify-content: space-between;
   align-items: flex-end; /* Aligns stems to the bottom */
+
+  margin-top: 10%;
+
+  width: 86%; 
+  height: 40%;
 }
 
 .stem {
@@ -407,23 +437,28 @@ button {
   justify-content: center;
   align-items: center;
 
-  margin-top: 8px;
-  margin-bottom: 4px;
+  margin-top: 3%;
+  margin-bottom: 2%;
 
   width: 88%; 
   height: 40%;
 
   font-size: 1em;
+
+  overflow: hidden;
 }
 
 /* === SECTION STYLES === */
 section {
-  min-height: 200px;
-  padding: 20px;
   margin: 100px auto 100px;
+  padding: 20px;
+
+  min-height: 200px;
   max-width: 60%;
+
   background: var(--section-bg);
   border-radius: var(--border-rounding);
+
   transition: background 0.3s;
 }
 
@@ -436,6 +471,7 @@ section {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  align-items: center;
   text-align: left;
 }
 
