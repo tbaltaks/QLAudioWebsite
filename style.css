@@ -535,7 +535,7 @@ section {
   background: var(--alt-section-bg);
 
   content: "";
-  z-index: -1;
+  z-index: 1;
 }
 
 #demo {
@@ -549,8 +549,6 @@ section {
   background: var(--section-bg);
 
   overflow: hidden; /* Prevents ::before from spilling outside */
-
-  z-index: -2;
 }
 
 #demo-preamble {
@@ -570,6 +568,8 @@ section {
   align-content: center;
 
   gap: 80px;
+
+  z-index: 2;
 }
 
 #demo-header {
