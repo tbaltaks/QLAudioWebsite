@@ -307,13 +307,13 @@ body {
 
 /* === CLASS STYLES === */
 button {
-  font-family: 'Eina03', sans-serif;
-  font-weight: 300;
-  font-size: 1rem;
-  
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-family: 'Eina03', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
 
   color: var(--button-text);
   background: var(--button-bg);
@@ -334,8 +334,8 @@ button {
   flex-direction: column;
   align-items: center;
 
-  aspect-ratio: 1.66;
   width: 216px;
+  height: 130px;
 
   font-weight: 600;
   font-size: 1.2em;
@@ -378,7 +378,7 @@ button {
 }
 
 .visualizer {
-  margin: 6%;
+  /* margin: 6%; */
   width: 84%; /* Ensures it spans the button */
   height: 42%; /* Adjust this based on your preferred height */
 
