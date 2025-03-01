@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === ON WINDOW RESIZE EVENT ===
 window.addEventListener('resize', () => {
-  grid1Width = gridElement.offsetWidth;
+  grid1Width = document.getElementById("grid1").offsetWidth;
 });
 
 
@@ -163,9 +163,6 @@ const grid1Width = grid1.getBoundingClientRect().width;
 const grid1MarginRight = parseFloat(getComputedStyle(grid1).marginRight);
 const effectiveGridWidth = grid1Width + grid1MarginRight;
 
-console.log(document.getElementById("grid1").getBoundingClientRect().left);
-console.log(document.getElementById("grid2").getBoundingClientRect().left);
-
 let lastTimestamp;
 let distance = 0;
 const speed = 6; // pixels per second, adjust as needed
@@ -223,7 +220,6 @@ async function loadAudio(cell) {
 
         const arrayBuffer = await response.arrayBuffer();
         const decodedAudioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        console.log(`Decoded AudioBuffer for ${audioURL}`);
 
         storedCellData.set(cell, {
             buffer: decodedAudioBuffer,
@@ -240,10 +236,6 @@ async function loadAudio(cell) {
         const cellData = storedCellData.get(cell);
         cellData.MAX_EXTRA_HEIGHT = cellData.visHeight * 0.55;
         cellData.MAX_TOTAL_HEIGHT = cellData.baseStemHeight + cellData.MAX_EXTRA_HEIGHT;
-
-        cellData.stems.forEach((stem, i) => {
-          console.log(`Cell [${cell.dataset.audio}] - Stem ${i} border-radius:`, getComputedStyle(stem).borderRadius);
-      });
 
     } catch (error) {
         console.error("Error loading audio:", error);
