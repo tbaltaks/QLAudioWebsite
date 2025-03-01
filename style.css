@@ -42,6 +42,71 @@
     --border-rounding: 24px;
 }
 
+/* === FONT === */
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03-RegularItalic';
+  src: url('assets/Eina-Font/Eina03-RegularItalic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-SemiboldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Eina03';
+  src: url('assets/Eina-Font/Eina03-BoldItalic.woff2') format('woff2');
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
 
 /* === THEME SETTINGS === */
 body.light-mode {
@@ -52,7 +117,7 @@ body.light-mode {
   --button-text: var(--charcoal);
   /* --primary-colour: var(--light-primary-colour); */
   --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-  --logo-colour: var(--scarlet);
+  /* --logo-colour: var(--scarlet); */
 }
 
 body.dark-mode {
@@ -62,14 +127,15 @@ body.dark-mode {
   --button-bg: var(--charcoal);
   --button-text: var(--off-white);
   /* --primary-colour: var(--dark-primary-colour); */
-  --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  --logo-colour: var(--white);
+  --backdrop-gradient: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  /* --logo-colour: var(--white); */
 }
 
 
 /* === GENERAL STYLES === */
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Eina03', sans-serif;
+  font-weight: 300;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -249,7 +315,9 @@ button {
   border-radius: var(--border-rounding);
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-family: 'Eina03', sans-serif;
+  font-weight: 300;
+  font-size: 0.1em;
   background: var(--button-bg);
   color: var(--button-text);
   transition: background 0.3s, color 0.3s;
@@ -262,6 +330,7 @@ button {
   width: 30vh;
   min-width: 180px;
   position: relative;
+  font-weight: 600;
   font-size: 1.2rem;
   background-color: var(--button-bg);
   color: var(--cell-colour);
@@ -326,7 +395,7 @@ button {
 }
 
 .cell-label {
-  font-size: 1rem;
+  font-size: 1em;
   margin: 6px; /* Space between visualizer and text */
 }
 
@@ -343,7 +412,6 @@ section {
 
 /* === MAIN CONTENT === */
 #content {
-  
 }
 
 #intro-header {
@@ -351,11 +419,12 @@ section {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  text-align: left;
 }
 
 #intro-heading {
-  font-size: 3rem;
-  
+  font-weight: 600;
+  font-size: 4em;
 }
 
 #app-image {
