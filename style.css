@@ -167,7 +167,6 @@ body {
 
 #theme-toggle {
   padding: 8px 16px;
-  font-size: 1rem;
   background: var(--button-bg);
   color: var(--button-text);
   border-radius: 12px;
@@ -298,7 +297,6 @@ body {
   width: 7.5vw;
   background-color: var(--button-bg);
   border-radius: 10px;
-  font-size: 14px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -317,7 +315,7 @@ button {
   cursor: pointer;
   font-family: 'Eina03', sans-serif;
   font-weight: 300;
-  font-size: 0.1em;
+  font-size: 1rem;
   background: var(--button-bg);
   color: var(--button-text);
   transition: background 0.3s, color 0.3s;
@@ -331,17 +329,15 @@ button {
   min-width: 180px;
   position: relative;
   font-weight: 600;
-  font-size: 1.2rem;
+  font-size: 1.2em;
   background-color: var(--button-bg);
   color: var(--cell-colour);
   cursor: pointer;
   transition: background 0.3s;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
-  text-align: center;
-  gap: 6px; /* Spacing between visualizer and text */
 }
 
 /* .audio-cell:hover {
@@ -395,8 +391,10 @@ button {
 }
 
 .cell-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1em;
-  margin: 6px; /* Space between visualizer and text */
 }
 
 /* === SECTION STYLES === */
