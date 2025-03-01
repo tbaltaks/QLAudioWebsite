@@ -130,7 +130,7 @@ body {
 
   font-family: 'Eina03', sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 18px;
   
   color: var(--text-colour);
   background: var(--bg-colour);
@@ -262,7 +262,7 @@ body {
 /* === APP BACKDROP === */
 #app-backdrop {
   width: 100%;
-  height: 100vh;
+  height: fit-content;
 }
 
 #app-backdrop::before {
@@ -449,10 +449,11 @@ button {
   overflow: hidden;
 }
 
+
 /* === SECTION STYLES === */
 section {
-  margin: 100px auto 100px;
-  padding: 20px;
+  margin: 12% auto 100px;
+  padding: 60px;
 
   min-height: 200px;
   max-width: 60%;
@@ -463,24 +464,44 @@ section {
   transition: background 0.3s;
 }
 
+
 /* === MAIN CONTENT === */
 #content {
 }
 
-#intro-header {
+/* Intro section */
+#intro {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
+
+  gap: 120px;
+}
+
+#intro-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
+
+  width: 30%;
+  height: 100%;
 }
 
 #intro-heading {
   font-weight: 600;
-  font-size: 4em;
+  font-size: 3.2em;
+  line-height: 1.28em;
+
+  margin-bottom: 4%;
+
+  color: var(--tangerine);
 }
 
 #app-image {
+  align-self: center;
   max-height: 300px;
 }
+
+/* Demo section */

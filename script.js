@@ -33,7 +33,7 @@ window.addEventListener('scroll', () => {
   {
     logo.classList.add('shrink');
   } 
-  else if (delta < 0 && window.scrollY < 480) // User is scrolling upward
+  else if (delta < 0 && window.scrollY < 340) // User is scrolling upward
   {
     logo.classList.remove('shrink');
   }
