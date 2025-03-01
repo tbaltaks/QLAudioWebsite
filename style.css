@@ -41,70 +41,62 @@
     --border-rounding: 24px;
 }
 
-/* === FONT === */
+/* === FONTS === */
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03-RegularItalic';
   src: url('assets/Eina-Font/Eina03-RegularItalic.woff2') format('woff2');
   font-weight: normal;
   font-style: italic;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-SemiboldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-Bold.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
-  font-display: swap;
-}
-
+  font-display: swap; }
 @font-face {
   font-family: 'Eina03';
   src: url('assets/Eina-Font/Eina03-BoldItalic.woff2') format('woff2');
   font-weight: bold;
   font-style: italic;
-  font-display: swap;
-}
+  font-display: swap; }
+
+@font-face {
+    font-family: 'Cocogoose';
+    src: url('assets/Cocogoose-Font/CocogooseProTrial-Semilight.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; }
 
 
 /* === THEME SETTINGS === */
@@ -163,7 +155,7 @@ body {
 }
 
 #theme-toggle {
-  padding: 8px 16px;
+  padding: 12px 15px 8px;
   background: var(--button-bg);
   color: var(--button-text);
   border-radius: 12px;
@@ -215,8 +207,12 @@ body {
   bottom: 100%;  /* Position it above the button */
   left: 50%;
   transform: translateX(-50%) translateY(10px); /* Start a bit below final position */
+
+  font-size: 1.1rem;
+
   opacity: 0;
   color: var(--text-colour);
+
   pointer-events: none;  /* So it doesn't interfere with clicks */
   animation: popup-in 0.8s forwards;  /* Animate in on load */
   animation-delay: 1.5s; /* Wait this much time before animation starts */
@@ -230,7 +226,7 @@ body {
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(-4px);
   }
 }
 
@@ -238,11 +234,11 @@ body {
 @keyframes popup-out {
   from {
     opacity: 1;
-    transform: translateX(-50%) translateY(-2px);
+    transform: translateX(-50%) translateY(-4px);
   }
   to {
     opacity: 0;
-    transform: translateX(-50%) translateY(-15px);
+    transform: translateX(-50%) translateY(-18px);
   }
 }
 
@@ -289,16 +285,23 @@ body {
 
 /* Non-interactive grid cells */
 .grid-cell {
-  aspect-ratio: 1.65;
-  width: 7.5vw;
-  background-color: var(--button-bg);
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   text-align: center;
+
   gap: 6%; /* Spacing between visualizer and text */
+
+  aspect-ratio: 1.65;
+  width: 7.5vw;
+
+  font-family: 'Cocogoose', sans-serif;
+  font-size: 0.6rem;
+
+  background-color: var(--button-bg);
+  border-radius: 10px;
+
   user-select: none; /* Prevent text selection */
   -webkit-user-select: none;
   pointer-events: none; /* Ensures no interaction */
@@ -332,13 +335,14 @@ button {
 
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 
   width: 216px;
   height: 130px;
 
-  font-weight: 600;
-  font-size: 1.2em;
+  font-family: 'Cocogoose', sans-serif;
+  font-size: 1.1em;
 
   color: var(--cell-colour);
   background-color: var(--button-bg);
@@ -378,20 +382,19 @@ button {
 }
 
 .visualizer {
-  /* margin: 6%; */
-  width: 84%; /* Ensures it spans the button */
-  height: 42%; /* Adjust this based on your preferred height */
+  margin-top: 17px;
+
+  width: 86%; 
+  height: 40%;
 
   display: flex;  
   justify-content: space-between;
   align-items: flex-end; /* Aligns stems to the bottom */
-
-  /* border: 1px solid red; */
 }
 
 .stem {
   aspect-ratio: 1;
-  width: 2.8%;
+  width: 2.6%;
 
   background-color: var(--cell-colour); /* Adjust to match design */
   border-radius: 10px; /* Keeps them rounded */
@@ -403,6 +406,12 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-top: 8px;
+  margin-bottom: 4px;
+
+  width: 88%; 
+  height: 40%;
 
   font-size: 1em;
 }
