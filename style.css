@@ -178,7 +178,7 @@ body {
 
 /* === LOGO (SVG) === */
 #logo {
-  transform: translate(14vw, 35vh);
+  transform: translate(13.5vw, 35vh);
 
   aspect-ratio: 2.536;
   width: 36vw;
