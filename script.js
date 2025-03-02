@@ -168,7 +168,7 @@ let distance = 0;
 const speed = 6; // pixels per second, adjust as needed
 
 // Trigger the scroll
-// requestAnimationFrame(animateGrid);
+requestAnimationFrame(animateGrid);
 
 function animateGrid(timestamp) {
   if (!lastTimestamp) lastTimestamp = timestamp;

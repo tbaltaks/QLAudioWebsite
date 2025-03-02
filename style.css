@@ -572,6 +572,18 @@ section {
   z-index: 2;
 }
 
+#demo-cells {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+
+  width: fit-content;
+}
+
 #demo-header {
   text-align: end;
 }
@@ -591,6 +603,11 @@ section {
   animation: oscillate 1s ease-in-out infinite;
 }
 
+#demo-heading {
+  font-weight: 600;
+  font-size: 2.8em;
+}
+
 @keyframes oscillate {
   0%, 100% {
     transform: translateX(0);
@@ -598,23 +615,4 @@ section {
   50% {
     transform: translateX(10px);
   }
-}
-
-#demo-heading {
-  font-weight: 600;
-  font-size: 2.8em;
-
-  /* color: var(--turquoise); */
-}
-
-#demo-cells {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-template-rows: auto auto;
-  justify-content: center;
-  align-items: center;
-
-  gap: 20px;
-
-  width: fit-content;
 }
