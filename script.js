@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   splashCell.addEventListener('click', () => {
     if (popupText) {
       // Start the fade-out/up animation
-      popupText.style.animation = 'popup-out 0.6s forwards';
+      // popupText.style.animation = 'popup-out 0.6s forwards';
+      popupText.classList.add('popup-out');
     }
   });
 
@@ -23,6 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const beforeTopValue = preambleTextHeight + sectionPadding;
   demo.style.setProperty("--before-top", `${beforeTopValue}px`);
+
+  // DEMO HEADER SLIDE IN / OUT
+  const demoHeader = document.getElementById('demo-header');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        demoHeader.classList.add('slide-in'); // Add the class when in view
+      }
+    });
+  });
+
+  observer.observe(demoHeader);
 });
 
 
@@ -36,6 +50,7 @@ window.addEventListener('resize', () => {
 let lastScrollY = window.scrollY;
 
 window.addEventListener('scroll', () => {
+  // LOGO SHRINK / EXPAND
   let delta = window.scrollY - lastScrollY;
 
   const logo = document.getElementById('logo');
