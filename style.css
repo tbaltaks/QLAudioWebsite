@@ -594,7 +594,7 @@ section {
 }
 
 .slide-in {
-  animation: slide-in 0.5s forwards 0.5s;
+  animation: slide-in 0.5s ease-in-out forwards 0.5s;
 }
 
 @keyframes slide-in {
@@ -609,7 +609,7 @@ section {
 }
 
 .slide-out {
-  animation: slide-out 0.5s forwards 1.5s;
+  animation: slide-out 0.5s ease-in-out forwards;
 }
 
 @keyframes slide-out {
@@ -619,12 +619,14 @@ section {
   }
   to {
     opacity: 0;
-    transform: translateX(-40%);
+    transform: translateX(-40px);
   }
 }
 
 #arrow-left {
   font-size: 1.2em;
+
+  /* transition: all 0.5s ease-in-out; */
 
   animation: oscillate 1s ease-in-out infinite;
 }

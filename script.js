@@ -71,6 +71,46 @@ window.addEventListener('scroll', () => {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
+// === TRIGGER DEMO PROGRESSION ===
+const demoHeader = document.getElementById("demo-header");
+const arrow = document.getElementById('arrow-left');
+const demoHeading = document.getElementById("demo-heading");
+const demoParagraph = document.getElementById("demo-paragraph");
+const slideOutAnimation = document.querySelector('.slide-out');
+
+let demoPhase = 'unset';
+
+document.querySelectorAll('#demo-cells .audio-cell').forEach(cell => {
+  cell.addEventListener('click', () => {
+    if (demoPhase === 'unset') {
+      demoPhase = 'tap';
+      arrow.classList.add('slide-out');
+      demoHeading.classList.add('slide-out'); // Trigger slide-out aimation
+      demoParagraph.classList.add('slide-out');
+    }
+  });
+});
+
+demoHeading.addEventListener('animationend', () => {
+  if (demoPhase === 'tap') {
+    demoPhase = 'hold';
+
+    demoHeading.style.opacity = 0;
+    demoParagraph.style.opacity = 0;
+    demoHeading.textContent = "Hold";
+
+    demoHeading.classList.remove('slide-out'); // Remove slide-out aimation (just to text)
+    demoParagraph.classList.remove('slide-out');
+
+    demoHeading.classList.add('slide-in'); // Trigger slide-in aimation (just to text)
+    demoParagraph.classList.add('slide-in');
+  }
+});
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
 // === THEME TOGGLE ===
 const themeToggle = document.getElementById('theme-toggle');
 const appImage = document.getElementById('app-image');
