@@ -22,38 +22,41 @@
 
     <div id="app-backdrop">
 
-      <div class="scrolling-grid">
-        <div class="grid-wrapper">
+      <div class="backdrop-container">
+        <div class="grid-scroller">
           <div class="grid" id="grid1"> </div>
           <div class="grid" id="grid2"> </div>
           <div class="grid" id="grid3"> </div>
         </div>
       </div>
 
-      <div id=foreground-cell-wrapper>
-        <div class="popup-text">click me ↓</div>
-        <button class="audio-cell" data-colour="#dc5164" data-audio="assets/Log_Fire_Ambience.m4a">
-          <div class="visualizer">
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-            <div class="stem"></div>
-          </div>
-          <div class="cell-label">Log Fire Ambience</div>
-        </button>
-      </div>
+    </div>
+
+    <div id="splash-cell-container">
+
+      <div class="popup-text">click me ↓</div>
+
+      <button class="audio-cell" data-colour="#dc5164" data-audio="assets/Log_Fire_Ambience.m4a">
+        <div class="visualizer">
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+          <div class="stem"></div>
+        </div>
+        <div class="cell-label">Log Fire Ambience</div>
+      </button>
 
     </div>
 
@@ -71,13 +74,79 @@
     <section id="demo">
 
       <div id="demo-preamble">
-        <p>Once you’re in the app, you’ll be able to start playing, layering, and fading smoothly between any audio tracks with just two gestures:</p>
+        <p>Once you’re in the app, you’ll be able to start playing, layering, and fading smoothly between any audio tracks with just <em>two</em> gestures...</p>
       </div>
 
       <div id="demo-container">
 
         <div id="demo-cells">
-          <button class="audio-cell" data-colour="#af42f0" data-audio="assets/Dungeon_Ambience.mp3">
+          <button class="audio-cell" data-colour="#9fec83" data-audio="assets/Building_Interior_Music.mp3">
+            <div class="visualizer">
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+            </div>
+            <div class="cell-label">Calm Music</div>
+          </button>
+
+          <button class="audio-cell" data-colour="#e2d370" data-audio="assets/Mystic_Desert_Music.mp3">
+            <div class="visualizer">
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+            </div>
+            <div class="cell-label">Mystic Desert Music</div>
+          </button>
+
+          <button class="audio-cell" data-colour="#61b7ff" data-audio="assets/River_Ambience.mp3">
+            <div class="visualizer">
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+              <div class="stem"></div>
+            </div>
+            <div class="cell-label">River Ambience</div>
+          </button>
+
+          <button class="audio-cell" data-colour="#8d45f3" data-audio="assets/Dungeon_Ambience.mp3">
             <div class="visualizer">
               <div class="stem"></div>
               <div class="stem"></div>
@@ -97,72 +166,6 @@
               <div class="stem"></div>
             </div>
             <div class="cell-label">Dungeon Ambience</div>
-          </button>
-
-          <button class="audio-cell" data-colour="#68d3f0" data-audio="assets/Building_Interior_Music.mp3">
-            <div class="visualizer">
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-            </div>
-            <div class="cell-label">Building Interior Music</div>
-          </button>
-
-          <button class="audio-cell" data-colour="#af42f0" data-audio="assets/Dungeon_Ambience.mp3">
-            <div class="visualizer">
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-            </div>
-            <div class="cell-label">Dungeon Ambience</div>
-          </button>
-
-          <button class="audio-cell" data-colour="#68d3f0" data-audio="assets/Building_Interior_Music.mp3">
-            <div class="visualizer">
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-              <div class="stem"></div>
-            </div>
-            <div class="cell-label">Building Interior Music</div>
           </button>
         </div>
 

@@ -211,7 +211,7 @@ body {
 
 
 /* === SLASH SCREEN CELL === */
-#foreground-cell-wrapper {
+#splash-cell-container {
   position: absolute;
   transform: translate(100%, -90%);
   
@@ -285,7 +285,7 @@ body {
   pointer-events: none;
 }
 
-.scrolling-grid {
+.backdrop-container {
   display: flex;
   justify-content: flex-start;
 
@@ -295,7 +295,7 @@ body {
   filter: blur(1.5px);
 }
 
-.grid-wrapper {
+.grid-scroller {
   display: flex;
 
   width: 200%; /* Holds two copies of the grid */
@@ -587,6 +587,17 @@ section {
 
 #arrow-left {
   font-size: 1.2em;
+
+  animation: oscillate 1s ease-in-out infinite;
+}
+
+@keyframes oscillate {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
 }
 
 #demo-heading {

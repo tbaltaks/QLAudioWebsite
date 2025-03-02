@@ -158,7 +158,7 @@ createGrid(grid2, labels, colours);
 createGrid(grid3, labels, colours);
 
 // Get the wrapper and one grid element (assumed to be duplicated side by side)
-const gridWrapper = document.querySelector('.grid-wrapper');
+const gridScroller = document.querySelector('.grid-scroller');
 const grid1Width = grid1.getBoundingClientRect().width;
 const grid1MarginRight = parseFloat(getComputedStyle(grid1).marginRight);
 const effectiveGridWidth = grid1Width + grid1MarginRight;
@@ -168,7 +168,7 @@ let distance = 0;
 const speed = 6; // pixels per second, adjust as needed
 
 // Trigger the scroll
-requestAnimationFrame(animateGrid);
+// requestAnimationFrame(animateGrid);
 
 function animateGrid(timestamp) {
   if (!lastTimestamp) lastTimestamp = timestamp;
@@ -183,7 +183,7 @@ function animateGrid(timestamp) {
   }
   
   // Use translate3d for smoother performance
-  gridWrapper.style.transform = `translate3d(-${distance}px, 0, 0)`;
+  gridScroller.style.transform = `translate3d(-${distance}px, 0, 0)`;
   requestAnimationFrame(animateGrid);
 }
 
