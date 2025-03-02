@@ -3,18 +3,18 @@
 // === ON LOAD EVENT ===
 document.addEventListener('DOMContentLoaded', () => {
   // ANIMATE POPUP TEXT
-  const foregroundCell = document.querySelector('#foreground-cell-wrapper .audio-cell');
-  const popupText = document.querySelector('#foreground-cell-wrapper .popup-text');
+  const splashCell = document.querySelector('#splash-cell-container .audio-cell');
+  const popupText = document.querySelector('#splash-cell-container .popup-text');
 
   // Attach a click listener on the foreground cell to hide the popup text
-  foregroundCell.addEventListener('click', () => {
+  splashCell.addEventListener('click', () => {
     if (popupText) {
       // Start the fade-out/up animation
       popupText.style.animation = 'popup-out 0.6s forwards';
     }
   });
 
-  // CALCULATE DEMO SECTION ALT COLOUR
+  // CALCULATE DEMO SECTION ALT COLOUR HEIGHT
   const demo = document.getElementById('demo');
 
   const preambleTextHeight = document.getElementById('demo-preamble').offsetHeight;
